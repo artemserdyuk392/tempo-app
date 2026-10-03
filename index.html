@@ -48,6 +48,7 @@ button{font:inherit;color:inherit}
 .gear-btn{width:38px;height:38px;border-radius:13px;border:0;background:var(--surface);display:grid;place-items:center;cursor:pointer;box-shadow:var(--shadow)}
 .gear-btn svg{width:18px;height:18px}
 .dotsbar{display:flex;gap:5px;justify-content:center;padding:6px 0 6px;flex:0 0 auto}
+.dotsbar i{cursor:pointer}
 .dotsbar i{width:6px;height:6px;border-radius:9px;background:var(--line);transition:width .25s,background .25s}
 .dotsbar i.on{width:20px;background:var(--text)}
 .dotsbar i.home,.dotsbar i.rew{border-radius:3px}
@@ -174,11 +175,11 @@ button{font:inherit;color:inherit}
 
 /* nav */
 .nav{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom,0px));width:min(488px,calc(100% - 32px));
-  height:70px;background:var(--surface);border-radius:26px;box-shadow:0 14px 40px -14px rgba(16,20,24,.5);display:grid;grid-template-columns:1fr 92px 1fr;align-items:center;z-index:10}
-.nav-btn{border:0;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11.5px;font-weight:800;color:var(--muted);padding:8px}
-.nav-btn svg{width:24px;height:24px}
+  height:70px;background:var(--surface);border-radius:26px;box-shadow:0 14px 40px -14px rgba(16,20,24,.5);display:grid;grid-template-columns:1fr 1fr 84px 1fr 1fr;align-items:center;z-index:10}
+.nav-btn{border:0;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10.5px;font-weight:800;color:var(--muted);padding:8px 2px}
+.nav-btn svg{width:22px;height:22px}
 .nav-btn[aria-selected="true"]{color:var(--text)}
-.plus{justify-self:center;width:72px;height:72px;margin-top:-34px;border-radius:26px;border:5px solid var(--bg);background:var(--mint);color:var(--mint-ink);cursor:pointer;display:grid;place-items:center;
+.plus{justify-self:center;width:68px;height:68px;margin-top:-34px;border-radius:24px;border:5px solid var(--bg);background:var(--mint);color:var(--mint-ink);cursor:pointer;display:grid;place-items:center;
   box-shadow:inset 0 -5px 0 rgba(0,0,0,.14),0 10px 24px -8px rgba(44,239,176,.8);transition:border-color .45s}
 .plus svg{width:28px;height:28px}
 .plus:active{transform:translateY(2px)}
@@ -188,17 +189,29 @@ button{font:inherit;color:inherit}
 .scrim.open{opacity:1;pointer-events:auto}
 .sheet{position:fixed;left:0;right:0;bottom:0;max-width:520px;margin:0 auto;background:var(--surface);border-radius:30px 30px 0 0;
   padding:10px 18px calc(22px + env(safe-area-inset-bottom,0px));transform:translateY(105%);
-  transition:transform .34s cubic-bezier(.2,.8,.2,1),visibility 0s linear .34s;z-index:21;max-height:90vh;overflow:auto;visibility:hidden}
+  transition:transform .34s cubic-bezier(.2,.8,.2,1),visibility 0s linear .34s;z-index:21;
+  max-height:min(90vh,calc(var(--tg-viewport-height,100vh) - 16px));overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;scrollbar-width:none;visibility:hidden}
+.sheet::-webkit-scrollbar{display:none;width:0;height:0}
+.sheet *{max-width:100%}
 .sheet.open{transform:none;visibility:visible;transition-delay:0s}
 .grab{width:42px;height:5px;border-radius:9px;background:var(--line);margin:0 auto 16px}
 .sheet h2{font-weight:900;font-size:22px;margin:0 0 14px;overflow-wrap:anywhere}
-.field{width:100%;font:inherit;font-size:16px;font-weight:600;padding:13px;border-radius:16px;border:2px solid var(--line);background:var(--bg);color:var(--text);resize:none}
+.field{display:block;width:100%;min-width:0;font:inherit;font-size:16px;font-weight:600;padding:13px;border-radius:16px;border:2px solid var(--line);background:var(--bg);color:var(--text);resize:none;-webkit-appearance:none;appearance:none}
+textarea.field{overflow:hidden;line-height:1.35}
+input[type=number].field{-moz-appearance:textfield}
+input[type=number].field::-webkit-inner-spin-button,input[type=number].field::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.datechip{position:relative;overflow:hidden;display:inline-block}
+.dateover{position:absolute;inset:0;width:100%;height:100%;opacity:0;margin:0;padding:0;border:0;-webkit-appearance:none;appearance:none;cursor:pointer;font-size:16px}
+.armed{background:#FF3B30!important;color:#fff!important;border-color:#FF3B30!important;border-style:solid!important}
+.del.armed{border-radius:12px}
 .field:focus{outline:none;border-color:var(--ac)}
 .label{font-size:13px;color:var(--muted);margin:16px 0 8px;font-weight:700}
 .opts{display:flex;flex-wrap:wrap;gap:8px}
-.opt{border:2px solid var(--line);background:transparent;font-weight:700;padding:8px 13px;border-radius:99px;cursor:pointer}
+.opt{border:2px solid var(--line);background:transparent;font-weight:700;font-size:14px;padding:7px 12px;border-radius:99px;cursor:pointer}
+#addBtn{position:sticky;bottom:6px;z-index:2;box-shadow:inset 0 -4px 0 rgba(0,0,0,.14),0 10px 24px -10px rgba(0,0,0,.45)}
 .opt[aria-pressed="true"]{border-color:var(--text);background:var(--text);color:var(--bg)}
-.diff{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.diff{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
 .diff .opt{border-radius:18px;padding:11px 6px;text-align:center}
 .diff .opt b{display:block;font-weight:900}
 .diff .opt span{font-size:11.5px;opacity:.75;font-weight:700}
@@ -214,7 +227,7 @@ button{font:inherit;color:inherit}
 .tv-row b.late{color:#FF3B30}
 .tv-actions{display:grid;gap:10px}
 .lockbtn{display:flex;align-items:center;justify-content:center;gap:8px;color:var(--muted)}
-.area-row{display:grid;grid-template-columns:54px 1fr 36px;gap:8px;align-items:center;margin-bottom:6px}
+.area-row{display:grid;grid-template-columns:54px minmax(0,1fr) 36px;gap:8px;align-items:center;margin-bottom:6px}
 .area-row .field{padding:11px 10px}
 .area-row .emo{text-align:center;font-size:20px;padding:8px 4px}
 .swatches{display:flex;gap:7px;margin:2px 0 8px 62px;flex-wrap:wrap}
@@ -231,6 +244,70 @@ button{font:inherit;color:inherit}
 .coll-meta b{font-weight:900;font-size:15px}
 .coll-meta span.lk{margin-left:auto;font-size:12.5px;color:var(--muted);font-weight:700}
 .coll-meta span.now{margin-left:auto;font-size:12px;font-weight:800;color:var(--rc)}
+
+
+/* streak fire */
+.row2{display:flex;gap:10px;align-items:stretch;margin:10px 0 8px}
+.streak{display:flex;align-items:center;gap:8px;background:var(--surface);border-radius:16px;padding:6px 12px 6px 8px;box-shadow:var(--shadow);flex:0 0 auto;position:relative}
+.streak[data-s="0"]{--f1:#8A94A3;--f2:#AEB6C2;--f3:#D5DAE0}
+.streak[data-s="1"]{--f1:#FF6A1A;--f2:#FFA51A;--f3:#FFE27A}
+.streak[data-s="2"]{--f1:#FF3B1A;--f2:#FFB020;--f3:#FFF3B8}
+.streak[data-s="3"]{--f1:#1E7BFF;--f2:#19E3FF;--f3:#E0FBFF}
+.streak[data-s="4"]{--f1:#8A3FE6;--f2:#FF3CAC;--f3:#FFD6F0}
+.streak[data-s="5"]{--f1:#FF9F1C;--f2:#FFE27A;--f3:#FFFFFF}
+.fire{position:relative;width:36px;height:42px;flex:0 0 auto}
+.fire::before{content:"";position:absolute;inset:-8px;border-radius:50%;background:radial-gradient(circle,var(--f1) 0%,transparent 62%);opacity:.35;animation:glowp 1.2s ease-in-out infinite}
+.fire i{position:absolute;left:50%;bottom:6px;width:24px;height:24px;margin-left:-12px;border-radius:50% 0 50% 50%;transform:rotate(-45deg);transform-origin:50% 100%;background:var(--f1);animation:flame 1.1s ease-in-out infinite}
+.fire i:nth-child(2){width:15px;height:15px;margin-left:-7.5px;background:var(--f2);animation-duration:.9s;animation-delay:-.3s;bottom:8px}
+.fire i:nth-child(3){width:8px;height:8px;margin-left:-4px;background:var(--f3);animation-duration:.7s;animation-delay:-.15s;bottom:10px}
+.fire .sp{position:absolute;bottom:16px;left:50%;width:3px;height:3px;border-radius:50%;background:var(--f3);animation:spark 1.6s ease-out infinite;opacity:0}
+.streak[data-s="0"] .fire i{animation:none;transform:rotate(-45deg) scale(.55);opacity:.5} .streak[data-s="0"] .fire::before{animation:none;opacity:.15}
+.streak[data-s="4"] .fire::before,.streak[data-s="5"] .fire::before{opacity:.55}
+.streak[data-s="5"] .fire i{filter:drop-shadow(0 0 6px var(--f2))}
+@keyframes flame{0%,100%{transform:rotate(-45deg) scale(1)}30%{transform:rotate(-40deg) scale(1.08,1.2)}60%{transform:rotate(-50deg) scale(1.06,.92)}}
+@keyframes glowp{50%{opacity:.6;transform:scale(1.15)}}
+@keyframes spark{0%{transform:translate(0,0);opacity:0}15%{opacity:1}100%{transform:translate(var(--dx),-36px);opacity:0}}
+.streak b{font-weight:900;font-size:22px;line-height:1}
+.streak .lbl{font-size:10.5px;color:var(--muted);font-weight:700;line-height:1.2;max-width:92px}
+.streak.flare .fire{animation:flare 1s ease-out} @keyframes flare{25%{transform:scale(1.6) rotate(-6deg)}55%{transform:scale(1.2) rotate(4deg)}}
+.streak.flare::after{content:"";position:absolute;inset:-4px;border-radius:20px;border:3px solid var(--f2);animation:ring .9s ease-out forwards}
+@keyframes ring{0%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.25)}}
+.itemcard{flex:1;background:var(--surface);border-radius:16px;padding:8px 12px;box-shadow:var(--shadow);display:flex;flex-direction:column;justify-content:center;min-width:0}
+.itemcard .k{font-size:11px;color:var(--muted);font-weight:700}
+.itemcard b{color:var(--rc);font-weight:900;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.itemcard .n{font-size:11px;color:var(--muted);font-weight:600}
+.schip{display:inline-flex;align-items:center;gap:3px;font-size:11.5px;font-weight:800;padding:3px 8px;border-radius:99px;background:color-mix(in srgb,var(--f1,#FF6A1A) 18%,var(--surface-2));color:var(--f1,#FF6A1A)}
+.schip[data-s="0"]{--f1:#8A94A3} .schip[data-s="1"]{--f1:#FF6A1A} .schip[data-s="2"]{--f1:#FF3B1A} .schip[data-s="3"]{--f1:#1E7BFF} .schip[data-s="4"]{--f1:#8A3FE6} .schip[data-s="5"]{--f1:#E09200}
+
+/* completion fx */
+.stage.pulse{animation:stagepulse .7s ease-out}
+@keyframes stagepulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--ac) 70%,transparent)}100%{box-shadow:0 0 0 28px transparent}}
+.stage .wave{position:absolute;inset:0;border-radius:inherit;border:3px solid var(--ac);z-index:4;pointer-events:none;animation:wave .8s ease-out forwards}
+@keyframes wave{0%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.1)}}
+.task.pop{animation:taskpop .55s cubic-bezier(.2,.9,.3,1.3)}
+@keyframes taskpop{0%{transform:scale(1)}35%{transform:scale(1.04);box-shadow:0 0 0 4px color-mix(in srgb,var(--c) 45%,transparent),var(--shadow)}100%{transform:scale(1)}}
+.xpbar.glow i{animation:xpglow .9s ease-out}
+@keyframes xpglow{0%{box-shadow:inset 0 -3px 0 rgba(0,0,0,.12),0 0 0 0 color-mix(in srgb,var(--ac) 80%,transparent)}100%{box-shadow:inset 0 -3px 0 rgba(0,0,0,.12),0 0 18px 4px transparent}}
+.flycoin{position:fixed;z-index:35;width:26px;height:26px;pointer-events:none;filter:drop-shadow(0 4px 8px rgba(0,0,0,.25))}
+.flycoin svg{width:100%;height:100%}
+.pill.bump{animation:bump .45s cubic-bezier(.2,.9,.3,1.4)} @keyframes bump{40%{transform:scale(1.18)}}
+
+/* shop */
+.balance{background:var(--surface);border-radius:22px;padding:14px 16px;box-shadow:var(--shadow);display:flex;align-items:center;gap:12px}
+.balance .big{font-weight:900;font-size:30px;line-height:1}
+.balance .k{font-size:12px;color:var(--muted);font-weight:700}
+.balance .coin{width:34px;height:34px}
+.rw{background:var(--surface);border-radius:20px;padding:12px;margin-bottom:8px;box-shadow:var(--shadow);display:flex;align-items:center;gap:12px}
+.rw .em{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;font-size:24px;background:var(--surface-2);flex:0 0 auto}
+.rw .body{flex:1;min-width:0;cursor:pointer}
+.rw .nm{font-weight:800;overflow-wrap:anywhere}
+.rw .pr{font-size:12px;color:var(--muted);font-weight:700;margin-top:3px}
+.rw .bar{height:5px;border-radius:5px;background:var(--surface-2);margin-top:6px;overflow:hidden}
+.rw .bar i{display:block;height:100%;background:var(--ac);border-radius:inherit}
+.buy{flex:0 0 auto;border:0;cursor:pointer;border-radius:14px;padding:10px 12px;font-weight:900;font-size:13px;background:var(--mint);color:var(--mint-ink);box-shadow:inset 0 -3px 0 rgba(0,0,0,.14);white-space:nowrap}
+.buy:disabled{background:var(--surface-2);color:var(--muted);box-shadow:none;cursor:default}
+.hist{display:flex;justify-content:space-between;gap:10px;font-size:13.5px;padding:8px 2px;border-bottom:1px solid var(--line)}
+.hist span{color:var(--muted);font-weight:600}
 
 /* celebration */
 .celebrate{position:fixed;inset:0;z-index:40;display:grid;place-items:center;background:rgba(10,14,18,.86);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
@@ -282,10 +359,18 @@ button{font:inherit;color:inherit}
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg>
     Обзор
   </button>
+  <button class="nav-btn" role="tab" id="navShop" aria-selected="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h16l-1.5 11a2 2 0 01-2 1.8h-9a2 2 0 01-2-1.8z"/><path d="M8 8V6a4 4 0 018 0v2"/></svg>
+    Магазин
+  </button>
   <button class="plus" id="plus" aria-label="Добавить задачу"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
   <button class="nav-btn" role="tab" id="navAch" aria-selected="false">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4.5-8 4.5-8-4.5z"/><path d="M4 7.5V16l8 5 8-5V7.5"/><path d="M12 12v9"/></svg>
     Награды
+  </button>
+  <button class="nav-btn" id="navAreas">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>
+    Области
   </button>
 </nav>
 
@@ -304,19 +389,17 @@ button{font:inherit;color:inherit}
   </div>
   <div id="taskForm">
     <h2 id="addTitle">Новая задача</h2>
-    <textarea class="field" id="taskInput" rows="2" maxlength="140" placeholder="Что нужно сделать?"></textarea>
+    <textarea class="field" id="taskInput" rows="1" maxlength="140" placeholder="Что нужно сделать?"></textarea>
     <div class="label">Описание</div>
-    <textarea class="field" id="descInput" rows="3" maxlength="1000" placeholder="Детали, ссылки, заметки"></textarea>
+    <textarea class="field" id="descInput" rows="2" maxlength="1000" placeholder="Детали, ссылки, заметки"></textarea>
     <div class="label">Область</div>
     <div class="opts" id="areaOpts"></div>
     <div class="label">Сложность</div>
     <div class="diff" id="diffOpts"></div>
     <div class="label">Когда буду делать</div>
     <div class="opts" id="dueOpts"></div>
-    <input type="date" class="field" id="dueInput" style="margin-top:8px" aria-label="Дата, когда буду делать">
     <div class="label">Дедлайн (когда должно быть завершено)</div>
     <div class="opts" id="dlOpts"></div>
-    <input type="date" class="field" id="dlInput" style="margin-top:8px" aria-label="Дата дедлайна">
     <div class="label">Повтор</div>
     <div class="opts" id="repOpts"></div>
     <button class="primary" id="addBtn" disabled>Добавить задачу</button>
@@ -331,6 +414,20 @@ button{font:inherit;color:inherit}
   <button class="ghost" id="addArea">Добавить область</button>
   <button class="ghost" id="openColl" style="margin-top:8px">Предпросмотр коллекций</button>
   <button class="primary" id="areasDone">Готово</button>
+</div>
+
+<div class="sheet" id="rewardSheet" role="dialog" aria-modal="true" aria-labelledby="rwTitle">
+  <div class="grab"></div>
+  <h2 id="rwTitle">Новая награда</h2>
+  <div class="area-row" style="grid-template-columns:54px minmax(0,1fr)">
+    <input class="field emo" id="rwEmoji" value="🎁" maxlength="4" aria-label="Значок">
+    <input class="field" id="rwName" maxlength="60" placeholder="За что награда? Например: кофе навынос" aria-label="Название">
+  </div>
+  <div class="label">Цена в FCS</div>
+  <input class="field" id="rwPrice" type="number" inputmode="numeric" min="1" max="100000" placeholder="40">
+  <div class="hint" id="rwHint" style="text-align:left;margin-top:6px"></div>
+  <button class="primary" id="rwSave">Сохранить</button>
+  <button class="ghost" id="rwDel" style="margin-top:10px;display:none;color:#FF3B30;border-color:#FF3B30">Удалить награду</button>
 </div>
 
 <div class="sheet" id="collSheet" role="dialog" aria-modal="true" aria-labelledby="collTitle">
@@ -942,7 +1039,7 @@ function createView(canvas){
   let pts=null;
   if(t>=2){ const n=30+t*15, pos=new Float32Array(n*3); for(let i=0;i<n;i++){ pos[i*3]=(Math.random()-.5)*4.5; pos[i*3+1]=Math.random()*2.8; pos[i*3+2]=(Math.random()-.5)*3; }
     const geo=new T3.BufferGeometry(); geo.setAttribute('position',new T3.BufferAttribute(pos,3)); pts=new T3.Points(geo,new T3.PointsMaterial({color:P.acc2,size:.07,transparent:true,opacity:.9})); scene.add(pts); }
-  const v={canvas,renderer,scene,cam,group,pts,ring,rot:group.userData.osc?.2:.6,vel:0,ph:Math.random()*6,visible:true,t};
+  const v={canvas,renderer,scene,cam,group,pts,ring,rot:group.userData.osc?.2:.6,vel:0,ph:Math.random()*6,visible:true,t,kick:0,base:group.scale.x};
   let lx=null;
   canvas.addEventListener('pointerdown',e=>{ lx=e.clientX; try{ canvas.setPointerCapture(e.pointerId); }catch(err){} });
   canvas.addEventListener('pointermove',e=>{ if(lx===null) return; v.vel+=(e.clientX-lx)*.02; lx=e.clientX; });
@@ -959,6 +1056,7 @@ function loop3d(now){
     if(!v.visible || document.hidden) return;
     const osc=v.group.userData.osc; if(osc){ v.rot+=v.vel*dt; v.vel*=.9; v.group.rotation.y=(RM?0:Math.sin(now/1600+v.ph)*osc)+v.rot; } else { v.rot+=(RM?0:.35+v.vel)*dt; v.vel*=.92; v.group.rotation.y=v.rot; }
     v.group.position.y=RM?0:Math.sin(now/900+v.ph)*.04;
+    if(v.kick>0){ v.group.scale.setScalar(v.base*(1+.22*Math.sin(Math.min(1,v.kick)*Math.PI))); v.kick-=dt*1.4; if(v.kick<=0){ v.kick=0; v.group.scale.setScalar(v.base); } }
     if(v.pts){ const a=v.pts.geometry.attributes.position; for(let i=1;i<a.array.length;i+=3){ a.array[i]+=dt*.3; if(a.array[i]>2.8) a.array[i]=-.1; } a.needsUpdate=true; }
     v.ring.material.emissiveIntensity=.5+TIER_PAL[v.t].glow*(.7+.3*Math.sin(now/500+v.ph));
     if(v.group.userData.spin && !RM) v.group.userData.spin.forEach(o=>{ o.rotation[o.userData.axis||'y']+=dt*.6; });
@@ -1008,6 +1106,7 @@ function seed(){
       {id:uid(),t:'20 новых слов',desc:'',a:'lang',d:1,c:now-3,done:0,due:todayKey(),dl:'',rep:'d'}
     ],
     coins:0, energy:{day:todayKey(),used:0}, boxes:[], opened:0,
+    rewards:[{id:uid(),name:'Кофе навынос',emoji:'☕',price:40},{id:uid(),name:'Вечер сериала без чувства вины',emoji:'🍿',price:80},{id:uid(),name:'Новая книга',emoji:'📖',price:300}], purchases:[], rdays:{}, cdays:{},
     stats:{doneTotal:0,hardDone:0,owl:0,early:0,clean:0,areasCreated:0,earned:0},
     days:{}, ach:{} };
 }
@@ -1019,6 +1118,8 @@ function migrate(s){
   s.stats = Object.assign({doneTotal:0,hardDone:0,owl:0,early:0,clean:0,areasCreated:0,earned:0}, s.stats||{});
   s.days=s.days||{}; s.ach=s.ach||{}; s.boxes=s.boxes||[]; s.coins=s.coins||0; s.opened=s.opened||0; s.energy=s.energy||{day:todayKey(),used:0};
   s.tasks.forEach(t=>{ if(!t.done && !t.due) t.due=todayKey(); if(t.rep==null) t.rep=''; if(t.desc==null) t.desc=''; if(t.dl==null) t.dl=''; });
+  if(!s.rewards){ s.rewards=[{id:uid(),name:'Кофе навынос',emoji:'☕',price:40},{id:uid(),name:'Вечер сериала без чувства вины',emoji:'🍿',price:80},{id:uid(),name:'Новая книга',emoji:'📖',price:300}]; }
+  s.purchases=s.purchases||[]; s.rdays=s.rdays||{}; s.cdays=s.cdays||{}; s.v=5;
   return s;
 }
 
@@ -1044,6 +1145,9 @@ function prune(){
   const old = S.tasks.filter(t=>t.done && dkey(t.done)!==tk).sort((a,b)=>b.done-a.done);
   if(old.length>150){ const drop=new Set(old.slice(150).map(t=>t.id)); S.tasks=S.tasks.filter(t=>!drop.has(t.id)); }
   const keys = Object.keys(S.days).sort(); if(keys.length>120) keys.slice(0,keys.length-120).forEach(k=>delete S.days[k]);
+  Object.values(S.rdays).forEach(m=>{ const ks=Object.keys(m).sort(); if(ks.length>400) ks.slice(0,ks.length-400).forEach(k=>delete m[k]); });
+  const ck=Object.keys(S.cdays).sort(); if(ck.length>60) ck.slice(0,ck.length-60).forEach(k=>delete S.cdays[k]);
+  if(S.purchases.length>50) S.purchases=S.purchases.slice(-50);
 }
 let saveTimer=null, chain=Promise.resolve();
 function save(){ clearTimeout(saveTimer); saveTimer=setTimeout(flush,450); }
@@ -1062,6 +1166,12 @@ function recomputeDay(k){
 }
 function streak(){ const d=new Date(); d.setHours(12,0,0,0); if(!S.days[dkey(d)]) d.setDate(d.getDate()-1);
   let s=0; while(S.days[dkey(d)] && S.days[dkey(d)].n>0){ s++; d.setDate(d.getDate()-1); } return s; }
+function areaStreak(id){ const m=S.rdays[id]||{}; const d=new Date(); d.setHours(12,0,0,0); if(!m[dkey(d)]) d.setDate(d.getDate()-1); let s=0; while(m[dkey(d)]>0){ s++; d.setDate(d.getDate()-1); } return s; }
+const streakTier = n => n<=0?0:n<3?1:n<7?2:n<14?3:n<30?4:5;
+const STREAK_NAMES = ['нет серии','искра','огонь','синее пламя','фиолетовое пламя','золотое пламя'];
+function streakHTML(a){ const n=areaStreak(a.id), t=streakTier(n); const todayDone=(S.rdays[a.id]||{})[todayKey()]>0;
+  const sparks = t>=2 ? Array.from({length:t>=5?6:3},(_,i)=>`<i class="sp" style="--dx:${(i%2?1:-1)*(4+i*4)}px;animation-delay:${(i*.35).toFixed(2)}s"></i>`).join('') : '';
+  return `<div class="streak" data-s="${t}" data-area="${a.id}"><div class="fire"><i></i><i></i><i></i>${sparks}</div><div><b>${n}</b><div class="lbl">${n?plural(n,['день','дня','дней'])+' подряд':'серии нет'}<br>${todayDone?'сегодня засчитано':'закрой регулярную'}</div></div></div>`; }
 const maxDay = () => Object.values(S.days).reduce((m,d)=>Math.max(m,d.n),0);
 const maxAreasDay = () => Object.values(S.days).reduce((m,d)=>Math.max(m,(d.a||[]).length),0);
 const maxAreaLevel = () => S.areas.reduce((m,a)=>Math.max(m,areaLv(a).L),0);
@@ -1147,7 +1257,7 @@ const BASE = {light:{bg:'#EDF0F4',surface:'#FFFFFF',s2:'#E3E7EE'}, dark:{bg:'#0F
 function isDark(){ const t=document.documentElement.getAttribute('data-theme'); if(t) return t==='dark'; return window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches; }
 function mixHex(a,b,p){ const A=parseInt(a.slice(1),16),B=parseInt(b.slice(1),16); const c=i=>Math.round(((A>>i)&255)*p+((B>>i)&255)*(1-p));
   return '#'+((1<<24)+(c(16)<<16)+(c(8)<<8)+c(0)).toString(16).slice(1); }
-function pageColor(i){ const n=S.areas.length; if(i<=0) return '#2CEFB0'; if(i<=n) return S.areas[i-1].color; return '#FFB020'; }
+function pageColor(i){ const n=S.areas.length; if(i<=0) return '#2CEFB0'; if(i<=n) return S.areas[i-1].color; if(i===n+1) return '#FFC53D'; return '#A35CFF'; }
 function applyPageTheme(){
   const ac = pageColor(ui.page), d=isDark(), b=d?BASE.dark:BASE.light, r=document.documentElement.style;
   r.setProperty('--ac',ac); bgfx.set(ac);
@@ -1157,7 +1267,8 @@ function applyPageTheme(){
 
 /* ---------- render ---------- */
 const pagesEl = $('#pages');
-function pageCount(){ return S.areas.length+2; }
+function pageCount(){ return S.areas.length+3; }
+const shopIndex = () => S.areas.length+1;
 function renderTop(){
   const u = inTG && tg.initDataUnsafe && tg.initDataUnsafe.user; const name = u && u.first_name ? u.first_name : '';
   $('#who').textContent = name || 'Мой темп'; $('#ava').textContent = (name||'Т').slice(0,1).toUpperCase();
@@ -1165,8 +1276,8 @@ function renderTop(){
 }
 function renderDots(){
   const n=pageCount();
-  $('#dots').innerHTML = Array.from({length:n},(_,i)=>`<i class="${i===ui.page?'on':''}${i===0?' home':''}${i===n-1?' rew':''}" style="${i>0&&i<n-1?`--c:${S.areas[i-1].color}`:''}"></i>`).join('');
-  $('#navHome').setAttribute('aria-selected', ui.page===0); $('#navAch').setAttribute('aria-selected', ui.page===n-1);
+  $('#dots').innerHTML = Array.from({length:n},(_,i)=>`<i class="${i===ui.page?'on':''}${i===0?' home':''}${i>=n-2?' rew':''}" style="${i>0&&i<=S.areas.length?`--c:${S.areas[i-1].color}`:''}"></i>`).join('');
+  $('#navHome').setAttribute('aria-selected', ui.page===0); $('#navShop').setAttribute('aria-selected', ui.page===n-2); $('#navAch').setAttribute('aria-selected', ui.page===n-1);
 }
 function thumbHTML(set,tier,a){
   if(T3){ const src=thumbSrc(set,tier); return `<img data-th="${set}:${tier}" alt="" ${src?`src="${src}"`:''}>`; }
@@ -1179,7 +1290,7 @@ function homeHTML(){
     <div class="h2"><span>Коллекции</span><small>свайп влево — к областям</small></div>`;
   h += S.areas.map((a,i)=>{ const lv=areaLv(a), r=rarityOf(lv.L), set=a.set||'gem'; const open=S.tasks.filter(t=>!t.done&&t.a===a.id).length;
     return `<div class="ov" data-tier="${r}" data-go="${i+1}" style="--c:${a.color}">
-      <div class="ov-head"><span class="em">${esc(a.emoji)}</span><b>${esc(a.name)}</b><span class="lv">ур. ${lv.L} · ${RAR[r].name}</span><span class="chev">›</span></div>
+      <div class="ov-head"><span class="em">${esc(a.emoji)}</span><b>${esc(a.name)}</b><span class="schip" data-s="${streakTier(areaStreak(a.id))}">🔥 ${areaStreak(a.id)}</span><span class="lv">ур. ${lv.L}</span><span class="chev">›</span></div>
       <div class="th-row">${RAR.map((R,t)=>`<div><div class="th${t===r?' now':t<r?' had':' locked'}" data-tier="${t}">${thumbHTML(set,t,a)}<span class="lk">${t===r?'сейчас':t<r?'✓':'ур. '+R.from}</span></div><div class="th-name">${SETS[set].items[t]}</div></div>`).join('')}</div>
       <div class="ov-bar"><i style="width:${(lv.into/lv.need*100).toFixed(1)}%"></i></div>
       <div class="hint" style="margin:6px 0 0;text-align:left">${lv.into}/${lv.need} XP до ${lv.L+1} ур. · открытых задач: ${open}</div>
@@ -1197,7 +1308,7 @@ function areaHeadHTML(a){
 function areaMetaHTML(a){
   const lv=areaLv(a), r=rarityOf(lv.L), at=attrs(a);
   const bar=(label,val,col)=>`<div class="attr" style="--c:${col}"><span>${label}</span><div class="b"><i style="width:${Math.min(100,val/40*100).toFixed(0)}%"></i></div><em>${val}</em></div>`;
-  return `<div class="itemname" data-tier="${r}"><span>Предмет: <b>${itemName(a,r)}</b></span><span>${r<4?`следующий с ${RAR[r+1].from} ур.`:'максимум'}</span></div>
+  return `<div class="row2" data-tier="${r}">${streakHTML(a)}<div class="itemcard"><span class="k">Предмет</span><b>${itemName(a,r)}</b><span class="n">${r<4?`следующий с ${RAR[r+1].from} ур.`:'максимальная редкость'}</span></div></div>
     <div class="attrs">${bar('Эффективность',at.eff,'var(--eff)')}${bar('Удача',at.luck,'var(--luck)')}${bar('Комфорт',at.comf,'var(--comf)')}</div>`;
 }
 function areaPageHTML(a){
@@ -1250,7 +1361,7 @@ function rewardsHTML(){
 }
 function buildPages(){
   disposeViews(pagesEl);
-  pagesEl.innerHTML = homeHTML() + S.areas.map(areaPageHTML).join('') + rewardsHTML();
+  pagesEl.innerHTML = homeHTML() + S.areas.map(areaPageHTML).join('') + shopHTML() + rewardsHTML();
   ui.page = Math.min(ui.page, pageCount()-1);
   pagesEl.scrollLeft = ui.page * pagesEl.clientWidth;
   renderTop(); renderDots(); applyPageTheme(); mountNear(); flushThumbs();
@@ -1265,7 +1376,7 @@ function updateArea(id){
 }
 function updateHome(){ const p=pageEl(0); if(!p) return; const tmp=document.createElement('div'); tmp.innerHTML=homeHTML(); p.innerHTML=tmp.firstElementChild.innerHTML; flushThumbs(); }
 function updateRewards(){ const p=pageEl(pageCount()-1); if(!p) return; const tmp=document.createElement('div'); tmp.innerHTML=rewardsHTML(); p.innerHTML=tmp.firstElementChild.innerHTML; }
-function refreshAfterTask(areaId){ renderTop(); updateArea(areaId); updateHome(); updateRewards(); }
+function refreshAfterTask(areaId){ renderTop(); updateArea(areaId); updateHome(); updateShop(); updateRewards(); }
 function mountNear(){ if(!T3) return; for(let i=Math.max(0,ui.page-1); i<=Math.min(pageCount()-1,ui.page+1); i++){ const p=pageEl(i); if(p) mount3D(p); } }
 function goPage(i){ i=Math.max(0,Math.min(pageCount()-1,i)); ui.page=i; pagesEl.scrollTo({left:i*pagesEl.clientWidth,behavior:RM?'auto':'smooth'}); onPageChange(); }
 function onPageChange(){ renderDots(); applyPageTheme(); mountNear(); }
@@ -1273,6 +1384,56 @@ let scrollT=null;
 pagesEl.addEventListener('scroll',()=>{ clearTimeout(scrollT); scrollT=setTimeout(()=>{ const i=Math.round(pagesEl.scrollLeft/pagesEl.clientWidth); if(i!==ui.page){ ui.page=i; onPageChange(); haptic('select'); } },70); },{passive:true});
 window.addEventListener('resize',()=>{ pagesEl.scrollLeft=ui.page*pagesEl.clientWidth; });
 
+
+/* ---------- shop (personal rewards) ---------- */
+function avgCoinsPerDay(){ const ks=Object.keys(S.cdays).sort().slice(-7); if(!ks.length) return 0; return ks.reduce((s,k)=>s+(S.cdays[k]||0),0)/Math.max(ks.length,Math.min(7,Math.max(1,Object.keys(S.days).length))); }
+function daysEstimate(price){ const avg=avgCoinsPerDay(); const need=Math.max(0,price-S.coins); if(need<=0) return 'можно купить'; if(avg<=0) return `не хватает ${need} FCS`; const d=Math.ceil(need/avg); return `ещё ${need} FCS, примерно ${d} ${plural(d,['день','дня','дней'])}`; }
+function shopHTML(){
+  const rw=S.rewards.slice().sort((a,b)=>a.price-b.price);
+  let h=`<div class="balance"><svg class="coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#2CEFB0"/><circle cx="12" cy="12" r="7.5" fill="none" stroke="#06311F" stroke-width="1.6" opacity=".35"/><path d="M9.5 7.5h5.5M9.5 7.5v9M9.5 12h4" stroke="#06311F" stroke-width="2.2" stroke-linecap="round"/></svg><div><div class="big">${S.coins} FCS</div><div class="k">Баланс · в среднем ${Math.round(avgCoinsPerDay())} FCS в день</div></div></div>
+    <div class="h2"><span>Личные награды</span><small>честный контракт с собой</small></div>`;
+  h+=rw.length?rw.map(r=>{ const can=S.coins>=r.price; const pct=Math.min(100,S.coins/r.price*100);
+    return `<div class="rw" data-rw="${r.id}"><div class="em">${esc(r.emoji||'🎁')}</div><div class="body" role="button" tabindex="0" aria-label="Изменить награду"><div class="nm">${esc(r.name)}</div><div class="pr">${r.price} FCS · ${daysEstimate(r.price)}</div>${can?'':`<div class="bar"><i style="width:${pct.toFixed(0)}%"></i></div>`}</div><button class="buy" data-buy="${r.id}" ${can?'':'disabled'}>${can?'Купить':'Копим'}</button></div>`; }).join('')
+    :`<div class="empty"><div class="big">🎁</div><p>Добавь награды из реальной жизни и назначь им цену.</p></div>`;
+  h+=`<button class="addline" id="addReward">+ Новая награда</button>`;
+  if(S.purchases.length){ h+=`<div class="h2"><span>Куплено</span><small>последние ${Math.min(10,S.purchases.length)}</small></div>`+S.purchases.slice(-10).reverse().map(x=>`<div class="hist"><span>${fmtDay(dkey(x.ts))}</span><b>${esc(x.emoji||'')} ${esc(x.name)}</b><span>−${x.price}</span></div>`).join(''); }
+  return `<section class="page" data-page="shop">${h}</section>`;
+}
+function updateShop(){ const p=pageEl(shopIndex()); if(!p) return; const tmp=document.createElement('div'); tmp.innerHTML=shopHTML(); p.innerHTML=tmp.firstElementChild.innerHTML; }
+function openReward(id){
+  const r=id?S.rewards.find(x=>x.id===id):null; ui.rwId=r?r.id:null;
+  $('#rwTitle').textContent=r?'Изменить награду':'Новая награда'; $('#rwEmoji').value=r?r.emoji:'🎁'; $('#rwName').value=r?r.name:''; $('#rwPrice').value=r?r.price:'';
+  $('#rwDel').style.display=r?'':'none'; updateRwHint(); showSheet('#rewardSheet'); if(!r) setTimeout(()=>$('#rwName').focus(),320);
+}
+function updateRwHint(){ const v=parseInt($('#rwPrice').value,10); const avg=avgCoinsPerDay(); $('#rwHint').textContent = v>0 ? (avg>0?`Примерно ${Math.ceil(v/avg)} ${plural(Math.ceil(v/avg),['день','дня','дней'])} при текущем темпе. Ориентир: мелкое — 30–80, среднее — 150–400, крупное — от 1000.`:'Ориентир: мелкое — 30–80, среднее — 150–400, крупное — от 1000.') : ''; }
+function saveReward(){
+  const name=$('#rwName').value.trim(), price=parseInt($('#rwPrice').value,10), emoji=$('#rwEmoji').value.trim()||'🎁';
+  if(!name||!(price>0)){ toast('Нужны название и цена'); return; }
+  if(ui.rwId){ const r=S.rewards.find(x=>x.id===ui.rwId); if(r){ r.name=name; r.price=price; r.emoji=emoji; } } else S.rewards.push({id:uid(),name,price,emoji});
+  ui.rwId=null; save(); hideSheet(); updateShop(); haptic('impact','light');
+}
+function buyReward(id, btn){
+  const r=S.rewards.find(x=>x.id===id); if(!r||S.coins<r.price) return;
+  armConfirm(btn,'Точно?',()=>doBuy(r,btn));
+}
+function doBuy(r, btn){
+  if(S.coins<r.price) return;
+  S.coins-=r.price; S.purchases.push({id:uid(),name:r.name,emoji:r.emoji,price:r.price,ts:Date.now()}); save();
+  if(btn) burstAt(btn,['#FFC53D','#2CEFB0','#FF5D8F','#FFFFFF']);
+  celebrate({html:`<span>${esc(r.emoji||'🎁')}</span>`, rc:'#FFC53D', kicker:'Награда заработана', title:r.name, text:`−${r.price} FCS. Теперь это честно твоё.`});
+  renderTop(); updateShop();
+}
+/* ---------- two-tap confirm (works the same in Telegram on every platform) ---------- */
+function resetArmed(root){ (root||document).querySelectorAll('[data-armed="1"]').forEach(b=>{ clearTimeout(b._t); b.dataset.armed=''; b.classList.remove('armed'); if(b.dataset.label!=null && !b.dataset.icon) b.textContent=b.dataset.label; }); }
+function armConfirm(btn,label,action,opts){
+  opts=opts||{};
+  if(btn.dataset.armed==='1'){ resetArmed(btn.parentElement||document); action(); return; }
+  resetArmed(document);
+  btn.dataset.armed='1'; btn.classList.add('armed');
+  if(opts.icon){ btn.dataset.icon='1'; toast(label); } else { btn.dataset.label=btn.textContent; btn.textContent=label; }
+  haptic('notify','warning');
+  btn._t=setTimeout(()=>{ if(btn.dataset.armed==='1'){ btn.dataset.armed=''; btn.classList.remove('armed'); if(!opts.icon) btn.textContent=btn.dataset.label; } },3500);
+}
 /* ---------- feedback ---------- */
 let toastT;
 function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),2600); }
@@ -1296,8 +1457,13 @@ function complete(t, btn){
   if(!S.tasks.some(x=>!x.done) && (S.days[todayKey()]||{n:0}).n>=3) S.stats.clean=1;
   let dropped=null;
   if(!t.rolled){ t.rolled=1; if(Math.random()<.05+at.luck*.008){ const br=Math.min(4,rarityOf(areaLv(a).L)+(Math.random()<.15?1:0)); dropped={id:uid(),r:br}; S.boxes.push(dropped); } }
-  if(btn) floatAt(btn,[[`+${t.xp} XP`,a.color]].concat(t.coins?[[`+${t.coins} FCS`,'#14B886']]:[]));
-  haptic('impact','medium'); const row=btn&&btn.closest('.task'); if(row) row.classList.add('done');
+  if(t.repOf){ const m=S.rdays[a.id]||(S.rdays[a.id]={}); const k=dkey(t.done); m[k]=(m[k]||0)+1; }
+  if(t.coins){ const k=dkey(t.done); S.cdays[k]=(S.cdays[k]||0)+t.coins; }
+  const rowEl=btn&&btn.closest('.task');
+  if(btn){ floatAt(btn,[[`+${t.xp} XP`,a.color]].concat(t.coins?[[`+${t.coins} FCS`,'#14B886']]:[])); burstAt(btn,[a.color,'#2CEFB0','#FFD23F','#FFFFFF']); if(t.coins) flyCoins(btn,Math.min(3,Math.ceil(t.coins/5))); }
+  if(rowEl) rowEl.classList.add('done','pop');
+  stageFx(a.id, !!t.repOf);
+  haptic('impact','medium');
   save();
   setTimeout(()=>{
     const af=areaLv(a), afR=rarityOf(af.L), afO=overallLv();
@@ -1313,11 +1479,13 @@ function undo(t, btn){
   const a=S.areas.find(x=>x.id===t.a); if(!a) return;
   const k=dkey(t.done);
   a.xp=Math.max(0,a.xp-(t.xp||DIFF[t.d].xp));
+  const hadCoins=t.coins||0;
   if(t.coins){ S.coins=Math.max(0,S.coins-t.coins); S.stats.earned=Math.max(0,S.stats.earned-t.coins); }
   if(t.en && k===todayKey()) S.energy.used=Math.max(0,S.energy.used-t.en);
   S.stats.doneTotal=Math.max(0,S.stats.doneTotal-1); if(t.d===3) S.stats.hardDone=Math.max(0,S.stats.hardDone-1);
   t.done=0; t.xp=0; t.coins=0; t.en=0;
-  if(t.repOf){ const orig=S.tasks.find(x=>x.id===t.repOf); if(orig&&t.prevDue) orig.due=t.prevDue; S.tasks=S.tasks.filter(x=>x.id!==t.id); }
+  if(t.repOf){ const orig=S.tasks.find(x=>x.id===t.repOf); if(orig&&t.prevDue) orig.due=t.prevDue; S.tasks=S.tasks.filter(x=>x.id!==t.id); const m=S.rdays[a.id]; if(m&&m[k]>0){ m[k]--; if(!m[k]) delete m[k]; } }
+  if(hadCoins){ S.cdays[k]=Math.max(0,(S.cdays[k]||0)-hadCoins); }
   recomputeDay(k);
   if(btn) floatAt(btn,[['отменено','var(--muted)']]); haptic('impact','light');
   save(); refreshAfterTask(a.id);
@@ -1325,17 +1493,17 @@ function undo(t, btn){
 function openBox(id){
   const i=S.boxes.findIndex(b=>b.id===id); if(i<0) return;
   const b=S.boxes.splice(i,1)[0]; const [lo,hi]=BOX_REWARD[b.r]; const n=rnd(lo,hi);
-  S.coins+=n; S.stats.earned+=n; S.opened++;
+  S.coins+=n; S.stats.earned+=n; S.opened++; S.cdays[todayKey()]=(S.cdays[todayKey()]||0)+n;
   let extra=''; if(Math.random()<.25+b.r*.1){ S.energy.used=Math.max(-4,S.energy.used-2); extra=' и +2 энергии на сегодня'; }
   save();
   celebrate({html:boxSVG(RAR[b.r].c), box:true, open:true, rc:RAR[b.r].c, kicker:RAR[b.r].box, title:`+${n} FCS`, text:`Бокс открыт${extra}`, reveal:COIN_SVG});
-  checkAch(); save(); renderTop(); updateRewards();
+  checkAch(); save(); renderTop(); updateShop(); updateRewards();
 }
 
 /* ---------- sheets ---------- */
 let openSheet=null;
-function showSheet(id){ openSheet=$(id); $('#scrim').classList.add('open'); openSheet.classList.add('open'); openSheet.scrollTop=0; if(inTG&&ver('6.1')){ try{ tg.BackButton.show(); }catch(e){} } }
-function hideSheet(){ if(!openSheet) return; const s=openSheet; if(s.id==='collSheet') setTimeout(()=>disposeViews(s),400); s.classList.remove('open'); $('#scrim').classList.remove('open'); openSheet=null; if(inTG&&ver('6.1')){ try{ tg.BackButton.hide(); }catch(e){} } }
+function showSheet(id){ resetArmed(document); openSheet=$(id); $('#scrim').classList.add('open'); openSheet.classList.add('open'); openSheet.scrollTop=0; if(inTG&&ver('6.1')){ try{ tg.BackButton.show(); }catch(e){} } }
+function hideSheet(){ if(!openSheet) return; const s=openSheet; resetArmed(s); if(s.id==='areasSheet' && ui.areasDirty){ ui.areasDirty=false; setTimeout(()=>{ checkAch(); save(); buildPages(); },360); } if(s.id==='collSheet') setTimeout(()=>disposeViews(s),400); s.classList.remove('open'); $('#scrim').classList.remove('open'); openSheet=null; if(inTG&&ver('6.1')){ try{ tg.BackButton.hide(); }catch(e){} } }
 function currentAreaId(){ const n=S.areas.length; return (ui.page>=1&&ui.page<=n) ? S.areas[ui.page-1].id : null; }
 function openTask(editId, areaId){
   if(!S.areas.length){ openAreas(); return; }
@@ -1347,7 +1515,7 @@ function openTask(editId, areaId){
   if(t) renderTaskView(t);
   $('#addTitle').textContent=t?'Изменить задачу':'Новая задача'; $('#addBtn').textContent=t?'Сохранить':'Добавить задачу'; $('#delTaskBtn').style.display=t?'':'none';
   renderFormOpts(); $('#taskInput').value=t?t.t:''; $('#descInput').value=t?(t.desc||''):''; $('#addBtn').disabled=!t;
-  showSheet('#taskSheet'); if(!t) setTimeout(()=>$('#taskInput').focus(),320);
+  showSheet('#taskSheet'); requestAnimationFrame(()=>{ autoGrow($('#taskInput')); autoGrow($('#descInput')); }); if(!t) setTimeout(()=>$('#taskInput').focus(),320);
 }
 function renderTaskView(t){
   const a=S.areas.find(x=>x.id===t.a)||{name:'—',emoji:''}; const di=dueInfo(t.due); const dl=t.dl?dueInfo(t.dl):null;
@@ -1359,16 +1527,15 @@ function renderTaskView(t){
     + row('Повтор',REP[t.rep||'']) + (t.done?row('Статус','Выполнена'):'');
   $('#tvDone').style.display=t.done?'none':''; $('#tvDone').textContent='Готово, выполнено';
 }
+function autoGrow(el){ if(!el) return; el.style.height='auto'; const h=el.scrollHeight; el.style.height=Math.min(h,240)+'px'; el.style.overflowY=h>240?'auto':'hidden'; }
 function renderFormOpts(){
   $('#areaOpts').innerHTML=S.areas.map(a=>`<button class="opt" data-area="${a.id}" aria-pressed="${ui.newArea===a.id}">${esc(a.emoji)} ${esc(a.name)}</button>`).join('');
   $('#diffOpts').innerHTML=[1,2,3].map(d=>`<button class="opt" data-diff="${d}" aria-pressed="${ui.newDiff===d}"><b>${DIFF[d].name}</b><span>⚡${DIFF[d].en}&nbsp; +${DIFF[d].xp} XP</span></button>`).join('');
   const tk=todayKey(); const quick=[[tk,'Сегодня'],[addDaysKey(tk,1),'Завтра'],[addDaysKey(tk,2),'Послезавтра']];
   const custom=!quick.some(q=>q[0]===ui.newDue);
-  $('#dueOpts').innerHTML=quick.map(([k,l])=>`<button class="opt" data-due="${k}" aria-pressed="${ui.newDue===k}">${l}</button>`).join('')+`<button class="opt" data-due="custom" aria-pressed="${custom}">${custom?fmtDay(ui.newDue):'Другая дата'}</button>`;
-  $('#dueInput').value=ui.newDue; $('#dueInput').min=tk;
+  $('#dueOpts').innerHTML=quick.map(([k,l])=>`<button class="opt" data-due="${k}" aria-pressed="${ui.newDue===k}">${l}</button>`).join('')+`<label class="opt datechip" aria-pressed="${custom}">📅 ${custom?fmtDay(ui.newDue):'Другая дата'}<input type="date" class="dateover" data-date="due" value="${ui.newDue}" min="${tk}" aria-label="Выбрать дату"></label>`;
   const dlq=[['','Без дедлайна'],[addDaysKey(tk,7),'Через неделю'],[addDaysKey(tk,30),'Через месяц']]; const dlc=!!ui.newDl && !dlq.some(q=>q[0]===ui.newDl);
-  $('#dlOpts').innerHTML=dlq.map(([k,l])=>`<button class="opt" data-dl="${k}" aria-pressed="${ui.newDl===k}">${l}</button>`).join('')+`<button class="opt" data-dl="custom" aria-pressed="${dlc}">${dlc?fmtDay(ui.newDl):'Другая дата'}</button>`;
-  $('#dlInput').value=ui.newDl||''; $('#dlInput').min=tk;
+  $('#dlOpts').innerHTML=dlq.map(([k,l])=>`<button class="opt" data-dl="${k}" aria-pressed="${ui.newDl===k}">${l}</button>`).join('')+`<label class="opt datechip" aria-pressed="${dlc}">📅 ${dlc?fmtDay(ui.newDl):'Другая дата'}<input type="date" class="dateover" data-date="dl" value="${ui.newDl||ui.newDue||tk}" min="${tk}" aria-label="Выбрать дату дедлайна"></label>`;
   $('#repOpts').innerHTML=Object.keys(REP).map(k=>`<button class="opt" data-rep="${k}" aria-pressed="${ui.newRep===k}">${REP[k]}</button>`).join('');
 }
 function saveTask(){
@@ -1419,18 +1586,32 @@ function nextCel(){
   setTimeout(()=>$('#celBtn').focus(),100);
 }
 function closeCel(){ $('#cel').classList.remove('open'); setTimeout(nextCel,300); }
-function confetti(){
-  if(RM) return;
+const FX={P:[],on:false,last:0};
+function fxAdd(list){ FX.P.push(...list); if(!FX.on){ FX.on=true; FX.last=performance.now(); requestAnimationFrame(fxTick); } }
+function fxTick(now){
   const cv=$('#confetti'), ctx=cv.getContext('2d'), dpr=Math.min(2,window.devicePixelRatio||1);
-  cv.width=innerWidth*dpr; cv.height=innerHeight*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
-  const cols=['#2CEFB0','#FFD23F','#3D9BFF','#A35CFF','#FF9F1C','#FF5D8F'];
-  const P=Array.from({length:150},()=>({x:innerWidth/2,y:innerHeight*.38,vx:(Math.random()-.5)*15,vy:-Math.random()*15-4,
-    s:Math.random()*7+4,r:Math.random()*6,vr:(Math.random()-.5)*.4,c:cols[Math.random()*cols.length|0]}));
-  const st=performance.now();
-  (function tick(now){ const el=now-st; ctx.clearRect(0,0,innerWidth,innerHeight);
-    P.forEach(p=>{ p.vy+=.42; p.vx*=.985; p.x+=p.vx; p.y+=p.vy; p.r+=p.vr; ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.r);
-      ctx.globalAlpha=Math.max(0,1-el/1900); ctx.fillStyle=p.c; ctx.fillRect(-p.s/2,-p.s/4,p.s,p.s/2); ctx.restore(); });
-    if(el<1900) requestAnimationFrame(tick); else ctx.clearRect(0,0,innerWidth,innerHeight); })(st);
+  if(cv.width!==innerWidth*dpr||cv.height!==innerHeight*dpr){ cv.width=innerWidth*dpr; cv.height=innerHeight*dpr; }
+  ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,innerWidth,innerHeight);
+  const dt=Math.min(40,now-FX.last)/16.7; FX.last=now;
+  FX.P=FX.P.filter(p=>{ p.t+=dt*16.7; if(p.t>p.life) return false; p.vy+=p.g*dt; p.vx*=Math.pow(.985,dt); p.x+=p.vx*dt; p.y+=p.vy*dt; p.r+=p.vr*dt;
+    ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.r); ctx.globalAlpha=Math.max(0,1-p.t/p.life); ctx.fillStyle=p.c;
+    if(p.shape==='dot'){ ctx.beginPath(); ctx.arc(0,0,p.s/2,0,6.283); ctx.fill(); } else ctx.fillRect(-p.s/2,-p.s/4,p.s,p.s/2); ctx.restore(); return true; });
+  if(FX.P.length) requestAnimationFrame(fxTick); else { FX.on=false; ctx.clearRect(0,0,innerWidth,innerHeight); }
+}
+function confetti(){ if(RM) return; const cols=['#2CEFB0','#FFD23F','#3D9BFF','#A35CFF','#FF9F1C','#FF5D8F'];
+  fxAdd(Array.from({length:150},()=>({x:innerWidth/2,y:innerHeight*.38,vx:(Math.random()-.5)*15,vy:-Math.random()*15-4,s:Math.random()*7+4,r:Math.random()*6,vr:(Math.random()-.5)*.4,g:.42,c:cols[Math.random()*cols.length|0],t:0,life:1900}))); }
+function burstAt(el,cols){ if(RM||!el) return; const r=el.getBoundingClientRect(), x=r.left+r.width/2, y=r.top+r.height/2;
+  fxAdd(Array.from({length:34},(_,i)=>{ const a=Math.random()*6.283, sp=3+Math.random()*7; return {x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-3,s:3+Math.random()*5,r:Math.random()*6,vr:(Math.random()-.5)*.5,g:.3,c:cols[i%cols.length],t:0,life:800+Math.random()*400,shape:i%3?'dot':'rect'}; })); }
+function flyCoins(el,n){ if(RM||!el) return; const pill=$('#coinPill').closest('.pill'); const r=el.getBoundingClientRect(), pr=pill.getBoundingClientRect();
+  for(let i=0;i<n;i++){ const c=document.createElement('div'); c.className='flycoin'; c.innerHTML=COIN_SVG; c.style.left=(r.left+r.width/2-13)+'px'; c.style.top=(r.top+r.height/2-13)+'px'; document.body.appendChild(c);
+    const dx=pr.left+pr.width/2-13-(r.left+r.width/2-13), dy=pr.top+pr.height/2-13-(r.top+r.height/2-13);
+    const an=c.animate([{transform:'translate(0,0) scale(1)',opacity:1},{transform:`translate(${dx*.4}px,${dy*.3-60}px) scale(1.2)`,opacity:1,offset:.45},{transform:`translate(${dx}px,${dy}px) scale(.6)`,opacity:.9}],{duration:720+i*90,delay:i*110,easing:'cubic-bezier(.3,.7,.4,1)',fill:'forwards'});
+    an.onfinish=()=>{ c.remove(); pill.classList.remove('bump'); void pill.offsetWidth; pill.classList.add('bump'); }; } }
+function stageFx(areaId, flare){ const i=areaIndex(areaId); const p=pageEl(i+1); if(!p) return;
+  const st=p.querySelector('.stage'); if(st){ st.classList.remove('pulse'); void st.offsetWidth; st.classList.add('pulse'); const w=document.createElement('div'); w.className='wave'; st.appendChild(w); setTimeout(()=>w.remove(),900);
+    const cvs=st.querySelector('canvas'); if(cvs){ views.forEach(v=>{ if(v.canvas===cvs){ v.kick=1; v.vel+=4; } }); } }
+  const xp=p.querySelector('.xpbar'); if(xp){ xp.classList.remove('glow'); void xp.offsetWidth; xp.classList.add('glow'); }
+  if(flare){ const sk=p.querySelector('.streak'); if(sk){ sk.classList.remove('flare'); void sk.offsetWidth; sk.classList.add('flare'); setTimeout(()=>sk.classList.remove('flare'),1100); burstAt(sk,['#FF6A1A','#FFB020','#FFE27A','#FFFFFF']); } }
 }
 
 
@@ -1465,7 +1646,11 @@ function renderThumb(k){
 /* ---------- events ---------- */
 function bind(){
   $('#navHome').addEventListener('click',()=>goPage(0));
+  $('#dots').addEventListener('click',e=>{ const i=[...$('#dots').children].indexOf(e.target); if(i>=0) goPage(i); });
   $('#navAch').addEventListener('click',()=>goPage(pageCount()-1));
+  $('#navShop').addEventListener('click',()=>goPage(shopIndex()));
+  $('#navAreas').addEventListener('click',openAreas);
+  $('#coinPill').closest('.pill').addEventListener('click',()=>goPage(shopIndex()));
   $('#plus').addEventListener('click',()=>openTask(null,currentAreaId()));
   $('#openAreas').addEventListener('click',openAreas);
   $('#scrim').addEventListener('click',hideSheet);
@@ -1480,36 +1665,44 @@ function bind(){
     const tg2=e.target.closest('[data-toggle]'); if(tg2){ const id=tg2.dataset.toggle; ui.showDone[id]=!ui.showDone[id]; updateArea(id); return; }
     const ov=e.target.closest('[data-go]'); if(ov){ goPage(+ov.dataset.go); haptic('select'); return; }
     const box=e.target.closest('[data-box]'); if(box){ openBox(box.dataset.box); return; }
+    const buy=e.target.closest('[data-buy]'); if(buy){ buyReward(buy.dataset.buy,buy); return; }
+    const rwb=e.target.closest('.rw .body'); if(rwb){ openReward(rwb.closest('.rw').dataset.rw); return; }
+    if(e.target.closest('#addReward')){ openReward(null); return; }
     const stg=e.target.closest('.stage'); if(stg){ const sec=stg.closest('[data-area]'); const a=sec&&S.areas.find(x=>x.id===sec.dataset.area); if(a) openCollection(a.set||'gem',a); return; }
   });
   pagesEl.addEventListener('keydown',e=>{ if(e.key==='Enter' && e.target.classList.contains('t-body')) openTask(e.target.closest('.task').dataset.id); });
 
-  $('#unlockBtn').addEventListener('click',()=>{ $('#taskView').style.display='none'; $('#taskForm').style.display=''; haptic('impact','light'); setTimeout(()=>$('#taskInput').focus(),100); });
+  $('#unlockBtn').addEventListener('click',()=>{ $('#taskView').style.display='none'; $('#taskForm').style.display=''; $('#taskSheet').scrollTop=0; autoGrow($('#taskInput')); autoGrow($('#descInput')); haptic('impact','light'); });
   $('#tvDone').addEventListener('click',()=>{ const t=S.tasks.find(x=>x.id===ui.editId); if(!t||t.done) return; hideSheet(); const i=areaIndex(t.a); if(i>=0 && ui.page!==i+1) goPage(i+1); setTimeout(()=>{ const row=pagesEl.querySelector(`.task[data-id="${t.id}"] .go`); complete(t,row||null); },350); });
-  $('#taskInput').addEventListener('input',e=>{ $('#addBtn').disabled=!e.target.value.trim(); });
+  $('#taskInput').addEventListener('input',e=>{ $('#addBtn').disabled=!e.target.value.trim(); autoGrow(e.target); });
+  $('#descInput').addEventListener('input',e=>autoGrow(e.target));
   $('#taskInput').addEventListener('keydown',e=>{ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); $('#descInput').focus(); } });
   $('#addBtn').addEventListener('click',saveTask);
   $('#areaOpts').addEventListener('click',e=>{ const c=e.target.closest('[data-area]'); if(!c) return; ui.newArea=c.dataset.area; renderFormOpts(); haptic('select'); });
   $('#diffOpts').addEventListener('click',e=>{ const c=e.target.closest('[data-diff]'); if(!c) return; ui.newDiff=+c.dataset.diff; renderFormOpts(); haptic('select'); });
-  $('#dueOpts').addEventListener('click',e=>{ const c=e.target.closest('[data-due]'); if(!c) return; if(c.dataset.due==='custom'){ try{ $('#dueInput').showPicker(); }catch(err){ $('#dueInput').focus(); } return; } ui.newDue=c.dataset.due; renderFormOpts(); haptic('select'); });
-  $('#dueInput').addEventListener('change',e=>{ if(/^\d{4}-\d{2}-\d{2}$/.test(e.target.value)){ ui.newDue=e.target.value; renderFormOpts(); } });
-  $('#dlOpts').addEventListener('click',e=>{ const c=e.target.closest('[data-dl]'); if(!c) return; if(c.dataset.dl==='custom'){ try{ $('#dlInput').showPicker(); }catch(err){ $('#dlInput').focus(); } return; } ui.newDl=c.dataset.dl; renderFormOpts(); haptic('select'); });
-  $('#dlInput').addEventListener('change',e=>{ ui.newDl=/^\d{4}-\d{2}-\d{2}$/.test(e.target.value)?e.target.value:''; renderFormOpts(); });
+  $('#dueOpts').addEventListener('click',e=>{ const c=e.target.closest('button[data-due]'); if(!c) return; ui.newDue=c.dataset.due; renderFormOpts(); haptic('select'); });
+  $('#dlOpts').addEventListener('click',e=>{ const c=e.target.closest('button[data-dl]'); if(!c) return; ui.newDl=c.dataset.dl; renderFormOpts(); haptic('select'); });
+  const onDatePick=e=>{ const inp=e.target.closest('.dateover'); if(!inp) return; const v=inp.value; if(!/^\d{4}-\d{2}-\d{2}$/.test(v)) return; if(inp.dataset.date==='due') ui.newDue=v; else ui.newDl=v; renderFormOpts(); haptic('select'); };
+  ['#dueOpts','#dlOpts'].forEach(id=>{ $(id).addEventListener('change',onDatePick); $(id).addEventListener('click',e=>{ const inp=e.target.closest('.dateover'); if(inp && inp.showPicker){ try{ inp.showPicker(); }catch(err){} } }); });
   $('#repOpts').addEventListener('click',e=>{ const c=e.target.closest('[data-rep]'); if(!c) return; ui.newRep=c.dataset.rep; renderFormOpts(); haptic('select'); });
-  $('#delTaskBtn').addEventListener('click',async()=>{ const id=ui.editId; if(!id) return; const t=S.tasks.find(x=>x.id===id); if(!(await askConfirm(`Удалить задачу «${t.t}»?`))) return; S.tasks=S.tasks.filter(x=>x.id!==id); ui.editId=null; save(); hideSheet(); updateArea(t.a); updateHome(); });
+  $('#delTaskBtn').addEventListener('click',e=>{ const id=ui.editId; if(!id) return; const t=S.tasks.find(x=>x.id===id); if(!t) return; armConfirm(e.currentTarget,'Точно удалить? Нажми ещё раз',()=>{ S.tasks=S.tasks.filter(x=>x.id!==id); ui.editId=null; save(); hideSheet(); updateArea(t.a); updateHome(); toast('Задача удалена'); haptic('notify','success'); }); });
 
-  $('#areasList').addEventListener('input',e=>{ const inp=e.target.closest('[data-f]'); if(!inp) return; const a=S.areas.find(x=>x.id===inp.closest('.area-row').dataset.area); if(!a) return; const v=inp.value.trim(); if(inp.dataset.f==='name') a.name=v||'Без названия'; else a.emoji=v||'✨'; save(); });
+  $('#areasList').addEventListener('input',e=>{ const inp=e.target.closest('[data-f]'); if(!inp) return; const a=S.areas.find(x=>x.id===inp.closest('.area-row').dataset.area); if(!a) return; const v=inp.value.trim(); if(inp.dataset.f==='name') a.name=v||'Без названия'; else a.emoji=v||'✨'; ui.areasDirty=true; save(); });
   $('#areasList').addEventListener('click',async e=>{
     const st=e.target.closest('[data-set]'); if(st){ const a=S.areas.find(x=>x.id===st.closest('.setrow').dataset.area); a.set=st.dataset.set; renderAreasList(); save(); buildPages(); haptic('select'); return; }
     const sw=e.target.closest('[data-color]'); if(sw){ const a=S.areas.find(x=>x.id===sw.closest('.swatches').dataset.area); a.color=sw.dataset.color; renderAreasList(); save(); applyPageTheme(); renderDots(); haptic('select'); return; }
     const d=e.target.closest('[data-del]');
-    if(d && S.areas.length>1){ const a=S.areas.find(x=>x.id===d.dataset.del); if(!(await askConfirm(`Удалить «${a.name}»? Задачи этой области и её опыт тоже удалятся.`))) return;
-      S.areas=S.areas.filter(x=>x.id!==a.id); S.tasks=S.tasks.filter(t=>t.a!==a.id); Object.values(S.days).forEach(dd=>{ if(dd.a) dd.a=dd.a.filter(x=>x!==a.id); }); renderAreasList(); save(); ui.page=0; buildPages(); }
+    if(d && S.areas.length>1){ const a=S.areas.find(x=>x.id===d.dataset.del); if(!a) return; armConfirm(d,`Нажми ещё раз, чтобы удалить «${a.name}» вместе с задачами и опытом`,()=>{
+      S.areas=S.areas.filter(x=>x.id!==a.id); S.tasks=S.tasks.filter(t=>t.a!==a.id); Object.values(S.days).forEach(dd=>{ if(dd.a) dd.a=dd.a.filter(x=>x!==a.id); }); delete S.rdays[a.id]; renderAreasList(); save(); ui.page=0; buildPages(); toast(`Область «${a.name}» удалена`); },{icon:true}); }
   });
   $('#addArea').addEventListener('click',()=>{ const used=new Set(S.areas.map(a=>a.color)); const color=COLORS.find(c=>!used.has(c))||COLORS[S.areas.length%COLORS.length]; const usedSets=new Set(S.areas.map(a=>a.set)); const set=Object.keys(SETS).find(k=>!usedSets.has(k))||'gem';
     S.areas.push({id:uid(),name:'Новая область',emoji:'✨',color,set,xp:0}); S.stats.areasCreated++; renderAreasList(); save(); buildPages(); const rows=document.querySelectorAll('#areasList input[data-f="name"]'); const last=rows[rows.length-1]; if(last){ last.focus(); last.select(); } });
   $('#openColl').addEventListener('click',()=>{ hideSheet(); const a=S.areas[Math.max(0,ui.page-1)]; setTimeout(()=>openCollection(a?a.set:'run',a),380); });
-  $('#areasDone').addEventListener('click',()=>{ hideSheet(); checkAch(); save(); buildPages(); });
+  $('#areasDone').addEventListener('click',()=>{ ui.areasDirty=true; hideSheet(); });
+  $('#rwSave').addEventListener('click',saveReward); $('#rwPrice').addEventListener('input',updateRwHint);
+  $('#rwDel').addEventListener('click',e=>{ const r=S.rewards.find(x=>x.id===ui.rwId); if(!r) return; armConfirm(e.currentTarget,'Точно удалить? Нажми ещё раз',()=>{ S.rewards=S.rewards.filter(x=>x.id!==r.id); ui.rwId=null; save(); hideSheet(); updateShop(); toast(`Награда «${r.name}» удалена`); haptic('notify','success'); }); });
+  $('#rwPrice').addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); saveReward(); } });
+  $('#rwName').addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); $('#rwPrice').focus(); } });
   $('#collSets').addEventListener('click',e=>{ const c=e.target.closest('[data-cset]'); if(!c) return; collSet=c.dataset.cset; const a=S.areas.find(x=>(x.set||'gem')===collSet); renderCollection(a); mount3D($('#collSheet')); haptic('select'); });
 }
 
@@ -1519,7 +1712,7 @@ async function init(){
   applyTheme(); if(inTG && tg.onEvent) tg.onEvent('themeChanged',()=>{ applyTheme(); applyPageTheme(); });
   S = (await load()) || seed();
   bind(); buildPages();
-  window.__tempo={get S(){ return S; }, thumbSrc, renderThumb};
+  window.__tempo={get S(){ return S; }, thumbSrc, renderThumb, updateShop, renderTop};
 }
 init();
 })();

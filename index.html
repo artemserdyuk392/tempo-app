@@ -348,6 +348,60 @@ input[type=number].field::-webkit-inner-spin-button,input[type=number].field::-w
 .rise{animation:rise .6s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i,0)*55ms)}
 @keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 
+
+/* calendar */
+.cal-head{display:flex;align-items:center;gap:8px;margin:4px 2px 10px}
+.cal-head .mon{font-weight:900;font-size:23px;letter-spacing:-.01em;flex:1}
+.sync{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:800;padding:6px 10px;border-radius:99px;background:var(--surface);box-shadow:var(--shadow);cursor:pointer;border:0;white-space:nowrap}
+.sync i{width:8px;height:8px;border-radius:50%;background:#9AA3AE;flex:0 0 auto}
+.sync[data-s="ok"] i{background:#22CC84;animation:okpulse 2.2s infinite}
+.sync[data-s="busy"] i{background:#FFB020;animation:blink .8s infinite}
+.sync[data-s="err"] i{background:#FF3B30}
+@keyframes okpulse{0%{box-shadow:0 0 0 0 rgba(34,204,132,.6)}70%{box-shadow:0 0 0 7px rgba(34,204,132,0)}100%{box-shadow:0 0 0 0 rgba(34,204,132,0)}}
+@keyframes blink{50%{opacity:.3}}
+.cal-nav{display:flex;gap:6px;align-items:center;margin-bottom:10px}
+.cal-btn{width:38px;height:36px;border-radius:12px;border:0;background:var(--surface);box-shadow:var(--shadow);font-weight:900;font-size:20px;cursor:pointer;line-height:1}
+.cal-today,.cal-others{border:0;background:var(--surface);box-shadow:var(--shadow);border-radius:12px;padding:9px 12px;font-weight:800;font-size:13px;cursor:pointer;white-space:nowrap}
+.cal-others{margin-left:auto}
+.cal-others[aria-pressed="false"]{background:var(--text);color:var(--bg)}
+.week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:2px;background:var(--surface);border-radius:20px;padding:6px;box-shadow:var(--shadow);position:relative}
+.wd{border:0;background:transparent;border-radius:14px;padding:7px 0 6px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;position:relative;z-index:1;transition:color .25s}
+.wd span{font-size:10.5px;font-weight:800;color:var(--muted);text-transform:uppercase;transition:color .25s}
+.wd b{font-size:17px;font-weight:900;transition:color .25s}
+.wd.today b{color:var(--ac)}
+.wd[aria-pressed="true"] span,.wd[aria-pressed="true"] b{color:var(--bg)}
+.wsel{position:absolute;top:6px;bottom:6px;left:6px;width:0;opacity:0;border-radius:14px;background:var(--text);transition:left .35s cubic-bezier(.2,.8,.2,1),width .35s;z-index:0}
+.wdots{display:flex;gap:2px;height:5px;font-style:normal}
+.wdots i{width:5px;height:5px;border-radius:50%}
+.cal-banner{background:var(--surface);border-radius:16px;padding:10px 12px;font-size:12.5px;font-weight:600;color:var(--muted);box-shadow:var(--shadow);margin-top:10px;line-height:1.4}
+.cal-banner.err{color:#B23030}
+.cal-retry{border:0;background:#FF3B30;color:#fff;border-radius:10px;padding:5px 10px;font-weight:800;font-size:12px;cursor:pointer;margin-left:4px}
+.untimed{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 4px}
+.uchip{border:0;background:var(--surface);box-shadow:var(--shadow);border-radius:12px;padding:7px 10px;font-weight:700;font-size:12.5px;cursor:pointer;border-left:4px solid var(--c);text-align:left;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;animation:blkin .4s cubic-bezier(.2,.8,.2,1) both}
+.uchip.done{opacity:.55;text-decoration:line-through}
+.uchip.ext{background:var(--surface-2)}
+.tl{position:relative;margin-top:10px;background:var(--surface);border-radius:20px;box-shadow:var(--shadow);padding:10px 8px 10px 0;overflow:hidden}
+.tl-grid{position:relative;margin-left:48px;cursor:copy}
+.hr{position:absolute;left:-48px;right:0;height:1px;background:var(--line);pointer-events:auto}
+.hr span{position:absolute;left:8px;top:-8px;font-size:10.5px;font-weight:800;color:var(--muted);background:var(--surface);padding-right:4px}
+.cblk{position:absolute;border-radius:10px;padding:4px 7px;overflow:hidden;cursor:pointer;background:color-mix(in srgb,var(--c) 22%,var(--surface));border-left:4px solid var(--c);box-shadow:0 3px 10px -6px rgba(0,0,0,.35);animation:blkin .45s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i,0)*45ms);z-index:2}
+.cblk b{display:block;font-size:12.5px;font-weight:800;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cblk span{display:block;font-size:10.5px;font-weight:700;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cblk.done{opacity:.55} .cblk.done b{text-decoration:line-through}
+.cblk.ext{background:repeating-linear-gradient(135deg,var(--surface-2) 0 6px,color-mix(in srgb,var(--surface-2) 55%,var(--surface)) 6px 12px);cursor:default}
+.cblk.pending::after{content:"⟳";position:absolute;right:6px;top:3px;font-size:11px;color:var(--muted);animation:spin 1.2s linear infinite}
+@keyframes blkin{from{opacity:0;transform:translateX(12px) scale(.96)}to{opacity:1;transform:none}}
+.nowline{position:absolute;left:-6px;right:0;height:2px;background:#FF3B30;z-index:5;pointer-events:none}
+.nowline::before{content:"";position:absolute;left:0;top:-4px;width:10px;height:10px;border-radius:50%;background:#FF3B30;animation:nowp 1.6s ease-out infinite}
+@keyframes nowp{0%{box-shadow:0 0 0 0 rgba(255,59,48,.6)}100%{box-shadow:0 0 0 10px rgba(255,59,48,0)}}
+.tag.tm{background:color-mix(in srgb,#5B7CFF 22%,var(--surface-2));color:#3D5BD9}
+.quick{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.qcard{border:0;background:var(--surface);border-radius:18px;padding:12px;box-shadow:var(--shadow);cursor:pointer;display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:10px;align-items:center;text-align:left}
+.qcard span{grid-row:1/3;font-size:26px}
+.qcard b{font-weight:900;font-size:15px}
+.qcard small{font-size:11.5px;color:var(--muted);font-weight:700}
+.ava{cursor:pointer}
+
 /* celebration */
 .celebrate{position:fixed;inset:0;z-index:40;display:grid;place-items:center;background:rgba(10,14,18,.86);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
   opacity:0;pointer-events:none;transition:opacity .25s;padding:24px}
@@ -398,14 +452,14 @@ input[type=number].field::-webkit-inner-spin-button,input[type=number].field::-w
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg>
     Сегодня
   </button>
+  <button class="nav-btn" role="tab" id="navCal" aria-selected="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor"/><circle cx="12" cy="14.5" r="1.2" fill="currentColor"/></svg>
+    Календарь
+  </button>
+  <button class="plus" id="plus" aria-label="Добавить задачу"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
   <button class="nav-btn" role="tab" id="navHome" aria-selected="false">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg>
     Обзор
-  </button>
-  <button class="plus" id="plus" aria-label="Добавить задачу"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
-  <button class="nav-btn" role="tab" id="navShop" aria-selected="false">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h16l-1.5 11a2 2 0 01-2 1.8h-9a2 2 0 01-2-1.8z"/><path d="M8 8V6a4 4 0 018 0v2"/></svg>
-    Магазин
   </button>
   <button class="nav-btn" role="tab" id="navAch" aria-selected="false">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4.5-8 4.5-8-4.5z"/><path d="M4 7.5V16l8 5 8-5V7.5"/><path d="M12 12v9"/></svg>
@@ -438,6 +492,9 @@ input[type=number].field::-webkit-inner-spin-button,input[type=number].field::-w
     <div class="diff" id="diffOpts"></div>
     <div class="label">Когда буду делать</div>
     <div class="opts" id="dueOpts"></div>
+    <div class="label">Время <span style="font-weight:600">— появится в календаре iPhone и Mac</span></div>
+    <div class="opts" id="tmOpts"></div>
+    <div class="opts" id="durOpts" style="margin-top:8px"></div>
     <div class="label">Дедлайн (когда должно быть завершено)</div>
     <div class="opts" id="dlOpts"></div>
     <div class="label">Повтор</div>
@@ -1150,7 +1207,7 @@ const overallLv = () => level(totalXp(),120,80);
 
 /* ---------- state ---------- */
 let S = null;
-const ui = {page:0, newArea:null, newDiff:2, newDue:null, newDl:'', newRep:'', editId:null, showDone:{}};
+const ui = {page:0, newArea:null, newDiff:2, newDue:null, newDl:'', newRep:'', newTm:'', newDur:60, editId:null, showDone:{}, calDay:null, calStatus:'idle', calMsg:''};
 const DEFAULT_AREAS = [
   {id:'work',name:'Работа',emoji:'💼',color:'#FF9F1C',set:'work'},
   {id:'study',name:'Учёба',emoji:'📚',color:'#3D9BFF',set:'study'},
@@ -1329,7 +1386,7 @@ const BASE = {light:{bg:'#EDF0F4',surface:'#FFFFFF',s2:'#E3E7EE'}, dark:{bg:'#0F
 function isDark(){ const t=document.documentElement.getAttribute('data-theme'); if(t) return t==='dark'; return window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches; }
 function mixHex(a,b,p){ const A=parseInt(a.slice(1),16),B=parseInt(b.slice(1),16); const c=i=>Math.round(((A>>i)&255)*p+((B>>i)&255)*(1-p));
   return '#'+((1<<24)+(c(16)<<16)+(c(8)<<8)+c(0)).toString(16).slice(1); }
-function pageColor(i){ const n=S.areas.length; if(i<=0) return '#2CEFB0'; if(i===1) return '#6FA2FF'; if(i<=n+1) return S.areas[i-2].color; if(i===n+2) return '#FFC53D'; return '#A35CFF'; }
+function pageColor(i){ const n=S.areas.length; if(i<=0) return '#2CEFB0'; if(i===1) return '#5B7CFF'; if(i===2) return '#6FA2FF'; if(i<=n+2) return S.areas[i-3].color; if(i===n+3) return '#FFC53D'; return '#A35CFF'; }
 function applyPageTheme(){
   const ac = pageColor(ui.page), d=isDark(), b=d?BASE.dark:BASE.light, r=document.documentElement.style;
   r.setProperty('--ac',ac); bgfx.set(ac);
@@ -1339,9 +1396,10 @@ function applyPageTheme(){
 
 /* ---------- render ---------- */
 const pagesEl = $('#pages');
-function pageCount(){ return S.areas.length+4; }
-const shopIndex = () => S.areas.length+2;
-const areaPage = i => i+2;
+function pageCount(){ return S.areas.length+5; }
+const shopIndex = () => S.areas.length+3;
+const areaPage = i => i+3;
+const P_CAL=1, P_HOME=2;
 function renderTop(){
   const u = inTG && tg.initDataUnsafe && tg.initDataUnsafe.user; const name = u && u.first_name ? u.first_name : '';
   $('#who').textContent = name || 'Мой темп'; $('#ava').textContent = (name||'Т').slice(0,1).toUpperCase();
@@ -1349,8 +1407,8 @@ function renderTop(){
 }
 function renderDots(){
   const n=pageCount();
-  $('#dots').innerHTML = Array.from({length:n},(_,i)=>`<i class="${i===ui.page?'on':''}${i<=1?' home':''}${i>=n-2?' rew':''}" style="${i>1&&i<=S.areas.length+1?`--c:${S.areas[i-2].color}`:''}"></i>`).join('');
-  $('#navToday').setAttribute('aria-selected', ui.page===0); $('#navHome').setAttribute('aria-selected', ui.page===1); $('#navShop').setAttribute('aria-selected', ui.page===n-2); $('#navAch').setAttribute('aria-selected', ui.page===n-1);
+  $('#dots').innerHTML = Array.from({length:n},(_,i)=>`<i class="${i===ui.page?'on':''}${i<=2?' home':''}${i>=n-2?' rew':''}" style="${i>2&&i<=S.areas.length+2?`--c:${S.areas[i-3].color}`:''}"></i>`).join('');
+  $('#navToday').setAttribute('aria-selected', ui.page===0); $('#navCal').setAttribute('aria-selected', ui.page===P_CAL); $('#navHome').setAttribute('aria-selected', ui.page===P_HOME); $('#navAch').setAttribute('aria-selected', ui.page===n-1);
 }
 function thumbHTML(set,tier,a){
   if(T3){ const src=thumbSrc(set,tier); return `<img data-th="${set}:${tier}" alt="" ${src?`src="${src}"`:''}>`; }
@@ -1360,9 +1418,10 @@ function homeHTML(){
   const en=energyLeft();
   let h=`<section class="energy" aria-label="Энергия"><div class="energy-row"><b>⚡ Энергия ${en}/${MAX_EN}</b><span>${en>0?'Задачи приносят FCS':'Сегодня только опыт'}</span></div>
     <div class="cells">${Array.from({length:MAX_EN},(_,i)=>`<i class="${i<en?'on':''}"></i>`).join('')}</div></section>
+    <div class="quick"><button class="qcard" data-go="${shopIndex()}"><span>🛍️</span><b>Магазин</b><small>${S.coins} FCS</small></button><button class="qcard" data-go="${pageCount()-1}"><span>🏆</span><b>Награды</b><small>${S.boxes.length?`${S.boxes.length} ${plural(S.boxes.length,['бокс','бокса','боксов'])} ждут`:`${Object.keys(S.ach).length}/${ACH.length} ачивок`}</small></button></div>
     <div class="h2"><span>Коллекции</span><small>свайп влево — к областям</small></div>`;
   h += S.areas.map((a,i)=>{ const lv=areaLv(a), r=rarityOf(lv.L), set=a.set||'gem'; const open=S.tasks.filter(t=>!t.done&&t.a===a.id).length;
-    return `<div class="ov" data-tier="${r}" data-go="${i+2}" style="--c:${a.color}">
+    return `<div class="ov" data-tier="${r}" data-go="${areaPage(i)}" style="--c:${a.color}">
       <div class="ov-head"><span class="em">${esc(a.emoji)}</span><b>${esc(a.name)}</b><span class="schip" data-s="${streakTier(areaStreak(a.id))}">🔥 ${areaStreak(a.id)}</span><span class="lv">ур. ${lv.L}</span><span class="chev">›</span></div>
       <div class="th-row">${RAR.map((R,t)=>`<div><div class="th${t===r?' now':t<r?' had':' locked'}" data-tier="${t}">${thumbHTML(set,t,a)}<span class="lk">${t===r?'сейчас':t<r?'✓':'ур. '+R.from}</span></div><div class="th-name">${SETS[set].items[t]}</div></div>`).join('')}</div>
       <div class="ov-bar"><i style="width:${(lv.into/lv.need*100).toFixed(1)}%"></i></div>
@@ -1402,7 +1461,7 @@ function taskRow(t, cls, st){
   const D = DIFF[t.d], di = dueInfo(t.due), dl = t.dl ? dueInfo(t.dl) : null;
   const reward = t.done
     ? `<span class="tag">+${t.xp||D.xp} XP</span>${t.coins?`<span class="tag">+${t.coins} FCS</span>`:''}${t.rep||t.repOf?'<span class="tag">↻</span>':''}`
-    : `<span class="tag due ${di.cls}">${di.label}</span>${dl?`<span class="tag dl ${dl.diff<0?'late':''}">⏰ до ${dl.diff===0?'сегодня':dl.diff===1?'завтра':fmtDay(t.dl)}</span>`:''}<span class="tag d${t.d}">${D.name} <span style="color:var(--muted)">⚡${D.en} +${D.xp}</span></span>${t.rep?`<span class="tag" title="${REP[t.rep]}">↻</span>`:''}${t.desc?'<span class="tag">≡</span>':''}`;
+    : `${t.tm?`<span class="tag tm">🕒 ${t.tm}</span>`:''}<span class="tag due ${di.cls}">${di.label}</span>${dl?`<span class="tag dl ${dl.diff<0?'late':''}">⏰ до ${dl.diff===0?'сегодня':dl.diff===1?'завтра':fmtDay(t.dl)}</span>`:''}<span class="tag d${t.d}">${D.name} <span style="color:var(--muted)">⚡${D.en} +${D.xp}</span></span>${t.rep?`<span class="tag" title="${REP[t.rep]}">↻</span>`:''}${t.desc?'<span class="tag">≡</span>':''}`;
   return `<div class="task${t.done?' done':''}${cls?' '+cls:''}" data-id="${t.id}" style="--c:${a.color}${st?';'+st:''}">
     <div class="t-ic">${esc(a.emoji)}</div>
     <div class="t-body" role="button" tabindex="0" aria-label="Открыть задачу"><div class="t-title">${esc(t.t)}</div><div class="t-meta">${reward}</div></div>
@@ -1433,12 +1492,13 @@ function rewardsHTML(){
   return `<section class="page" data-page="rewards">${h}</section>`;
 }
 function buildPages(){
+  if(!ui.calDay) ui.calDay=todayKey();
   disposeViews(pagesEl);
-  pagesEl.innerHTML = todayHTML(true) + homeHTML() + S.areas.map(areaPageHTML).join('') + shopHTML() + rewardsHTML();
+  pagesEl.innerHTML = todayHTML(true) + calPageHTML() + homeHTML() + S.areas.map(areaPageHTML).join('') + shopHTML() + rewardsHTML();
   requestAnimationFrame(()=>animateToday());
   ui.page = Math.min(ui.page, pageCount()-1);
   pagesEl.scrollLeft = ui.page * pagesEl.clientWidth;
-  renderTop(); renderDots(); applyPageTheme(); mountNear(); flushThumbs();
+  renderTop(); renderDots(); applyPageTheme(); mountNear(); flushThumbs(); requestAnimationFrame(placeWeekSel);
 }
 function pageEl(i){ return pagesEl.children[i]; }
 function areaIndex(id){ return S.areas.findIndex(a=>a.id===id); }
@@ -1448,12 +1508,12 @@ function updateArea(id){
   p.querySelector('.a-headwrap').innerHTML=areaHeadHTML(a); p.querySelector('.a-meta').innerHTML=areaMetaHTML(a); p.querySelector('.a-tasks').innerHTML=tasksHTML(a);
   const sw=p.querySelector('.stagewrap'); if(sw.dataset.tier!==String(r)){ disposeViews(sw); sw.dataset.tier=r; sw.innerHTML=stageHTML(a.set||'gem',r,a); mountNear(); }
 }
-function updateHome(){ const p=pageEl(1); if(!p) return; const tmp=document.createElement('div'); tmp.innerHTML=homeHTML(); p.innerHTML=tmp.firstElementChild.innerHTML; flushThumbs(); }
+function updateHome(){ const p=pageEl(P_HOME); if(!p) return; const tmp=document.createElement('div'); tmp.innerHTML=homeHTML(); p.innerHTML=tmp.firstElementChild.innerHTML; flushThumbs(); }
 function updateRewards(){ const p=pageEl(pageCount()-1); if(!p) return; const tmp=document.createElement('div'); tmp.innerHTML=rewardsHTML(); p.innerHTML=tmp.firstElementChild.innerHTML; }
-function refreshAfterTask(areaId){ renderTop(); updateArea(areaId); updateHome(); updateShop(); updateRewards(); updateToday(); }
+function refreshAfterTask(areaId){ renderTop(); updateArea(areaId); updateHome(); updateShop(); updateRewards(); updateToday(); updateCal(); }
 function mountNear(){ if(!T3) return; for(let i=Math.max(0,ui.page-1); i<=Math.min(pageCount()-1,ui.page+1); i++){ const p=pageEl(i); if(p) mount3D(p); } }
 function goPage(i){ i=Math.max(0,Math.min(pageCount()-1,i)); ui.page=i; pagesEl.scrollTo({left:i*pagesEl.clientWidth,behavior:RM?'auto':'smooth'}); onPageChange(); }
-function onPageChange(){ renderDots(); applyPageTheme(); mountNear(); }
+function onPageChange(){ renderDots(); applyPageTheme(); mountNear(); if(ui.page===P_CAL){ loadWeek(weekStartKey(ui.calDay)); if(!ui.calScrolled){ ui.calScrolled=true; setTimeout(scrollCalToFocus,250); } } }
 let scrollT=null;
 pagesEl.addEventListener('scroll',()=>{ clearTimeout(scrollT); scrollT=setTimeout(()=>{ const i=Math.round(pagesEl.scrollLeft/pagesEl.clientWidth); if(i!==ui.page){ ui.page=i; onPageChange(); haptic('select'); } },70); },{passive:true});
 window.addEventListener('resize',()=>{ pagesEl.scrollLeft=ui.page*pagesEl.clientWidth; });
@@ -1515,7 +1575,7 @@ function todayStats(){
   const tk=todayKey(), tm=addDaysKey(tk,1);
   const open=S.tasks.filter(t=>!t.done);
   const byArea=t=>S.areas.find(a=>a.id===t.a)||{name:'—',emoji:'❔',color:'#999'};
-  const sortT=(x,y)=>(areaIndex(x.a)-areaIndex(y.a))||(y.d-x.d);
+  const sortT=(x,y)=>{ const a=x.tm||'99:99', b=y.tm||'99:99'; return a<b?-1:a>b?1:(areaIndex(x.a)-areaIndex(y.a))||(y.d-x.d); };
   const late=open.filter(t=>t.due&&t.due<tk).sort(sortT), today=open.filter(t=>t.due===tk).sort(sortT), tomorrow=open.filter(t=>t.due===tm).sort(sortT);
   const doneToday=S.tasks.filter(t=>t.done&&dkey(t.done)===tk);
   const xpToday=doneToday.reduce((s,t)=>s+(t.xp||0),0), fcsToday=S.cdays[tk]||0;
@@ -1558,6 +1618,131 @@ function animateToday(count){ const p=pageEl(0); if(!p) return;
   p.querySelectorAll('.cnt').forEach(el=>{ const to=+el.dataset.to; if(count===false||RM){ el.textContent=to; return; } const t0=performance.now(), dur=700+Math.min(600,to*4);
     (function step(now){ const k=Math.min(1,(now-t0)/dur); const e=1-Math.pow(1-k,3); el.textContent=Math.round(to*e); if(k<1) requestAnimationFrame(step); })(t0); });
 }
+
+/* ---------- calendar: API + sync + page ---------- */
+const API_BASE='https://tema.tastytok.ru';
+function apiReady(){ return !!(tg && tg.initData) && !window.__TEMPO_NO_API; }
+async function api(method, path, body){
+  const ctl=('AbortController' in window)?new AbortController():null; const to=setTimeout(()=>ctl&&ctl.abort(),12000);
+  try{
+    const r=await fetch(API_BASE+path,{method,headers:Object.assign({'Authorization':'tma '+tg.initData},body?{'Content-Type':'application/json'}:{}),body:body?JSON.stringify(body):undefined,signal:ctl?ctl.signal:undefined});
+    if(!r.ok){ const e=new Error('HTTP '+r.status); e.status=r.status; try{ const j=await r.json(); e.detail=j.detail||j.error||null; }catch(_){} throw e; }
+    return await r.json();
+  }catch(e){ if(!e.status) e.network=true; throw e; } finally{ clearTimeout(to); }
+}
+function calErrText(e){ if(!e) return ''; if(e.status===401||e.status===403) return 'Нет доступа к серверу: проверь BOT_TOKEN и ALLOWED_USER_IDS'; if(e.status===429) return 'Слишком много запросов, повторю чуть позже'; if(e.network) return 'Нет связи с сервером, повторю позже'; if(e.status>=500) return 'Сервер или iCloud ответили ошибкой'+(e.detail?`: ${String(e.detail).slice(0,120)}`:''); return 'Ошибка '+e.status+(e.detail?`: ${String(e.detail).slice(0,120)}`:''); }
+const hm2m=t=>{ const [h,m]=String(t).split(':').map(Number); return h*60+m; };
+const m2hm=m=>{ m=((m%1440)+1440)%1440; return String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0'); };
+const addMin=(t,d)=>m2hm(hm2m(t)+d);
+const fmtDur=m=>m<60?`${m} мин`:(m%60?`${Math.floor(m/60)} ч ${m%60} мин`:`${m/60} ч`);
+const hhmm=d=>String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+const tzFmt={};
+function tzParts(d){ const tz=ui.tz||'Europe/Paris'; let f=tzFmt[tz]; if(f===undefined){ try{ f=tzFmt[tz]=new Intl.DateTimeFormat('en-CA',{timeZone:tz,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}); }catch(e){ f=tzFmt[tz]=null; } }
+  if(!f) return {k:dkey(d),hm:hhmm(d)}; const p={}; f.formatToParts(d).forEach(x=>p[x.type]=x.value); return {k:`${p.year}-${p.month}-${p.day}`,hm:`${p.hour==='24'?'00':p.hour}:${p.minute}`}; }
+function monLabel(k){ const m=fromKey(k).toLocaleDateString('ru-RU',{month:'long',year:'numeric'}).replace(/\s*г\.?$/,''); return m.charAt(0).toUpperCase()+m.slice(1); }
+function weekStartKey(k){ const d=fromKey(k||todayKey()); d.setDate(d.getDate()-((d.getDay()+6)%7)); return dkey(d); }
+let calVer=0, calBusy=false, calTimer=null; const calCache={};
+function calQueue(id,op){ S.calq=S.calq||{}; S.calq[id]={op,v:++calVer}; save(); scheduleCal(); }
+function calSync(t){ if(!t) return; if(t.tm && t.due) calQueue(t.id,'put'); else if(t.calOn || (S.calq&&S.calq[t.id])) calQueue(t.id,'del'); }
+function scheduleCal(ms){ clearTimeout(calTimer); calTimer=setTimeout(flushCal, ms==null?500:ms); }
+function eventBody(t){ const a=S.areas.find(x=>x.id===t.a)||{name:'',emoji:''}; return {title:t.t, description:t.desc||'', start:`${t.due}T${t.tm}`, duration_min:t.dur||60, done:!!t.done, area:a.name, emoji:a.emoji}; }
+function setCalStatus(st,msg){ ui.calStatus=st; ui.calMsg=msg||''; const el=document.querySelector('#calSync'); if(el){ el.dataset.s=st; el.querySelector('span').textContent=calStatusText(); } const b=document.querySelector('#calErr'); if(b){ b.style.display=(st==='err'&&ui.calMsg)?'':'none'; b.querySelector('span').textContent=ui.calMsg; } }
+function calStatusText(){ const q=S&&S.calq?Object.keys(S.calq).length:0; return ui.calStatus==='busy'?'Синхронизация…':ui.calStatus==='err'?'Ошибка':!apiReady()?'Вне Telegram':q?`В очереди: ${q}`:'iCloud'; }
+async function flushCal(){
+  if(calBusy) return; if(!apiReady()){ setCalStatus('local'); return; }
+  const ids=Object.keys(S.calq||{}); if(!ids.length){ if(ui.calStatus==='busy') setCalStatus('ok'); return; }
+  calBusy=true; setCalStatus('busy'); let ok=true, fatal=false;
+  for(const id of ids){ const item=S.calq[id]; if(!item) continue; const t=S.tasks.find(x=>x.id===id);
+    try{
+      if(item.op==='put' && t && t.tm && t.due){ await api('PUT',`/api/tasks/${encodeURIComponent(id)}/event`,eventBody(t)); t.calOn=1; }
+      else { await api('DELETE',`/api/tasks/${encodeURIComponent(id)}/event`); if(t) t.calOn=0; }
+      if(S.calq[id] && S.calq[id].v===item.v) delete S.calq[id];
+      Object.keys(calCache).forEach(k=>{ calCache[k].at=0; });
+    }catch(e){ ok=false; setCalStatus('err',calErrText(e)); if(e.status===401||e.status===403||e.status===429||e.network||e.status>=500){ fatal=true; break; } else { delete S.calq[id]; } }
+  }
+  calBusy=false; save(); if(ok) setCalStatus('ok');
+  if(ok && Object.keys(S.calq).length) scheduleCal(300); else if(fatal) scheduleCal(30000);
+  updateCal(); if(ok) loadWeek(weekStartKey(ui.calDay), true);
+}
+async function loadWeek(ws, force){
+  if(!apiReady()){ setCalStatus('local'); return; }
+  const c=calCache[ws]; if(c && (c.loading || (!force && Date.now()-c.at<45000))) return;
+  calCache[ws]=Object.assign({events:[],at:0},c||{},{loading:true});
+  try{ const we=addDaysKey(ws,6); const r=await api('GET',`/api/events?start=${ws}&end=${we}&others=${S.calOthers===false?0:1}`);
+    calCache[ws]={at:Date.now(),events:Array.isArray(r.events)?r.events:[]}; reconcileCal(calCache[ws].events,ws,we); if(ui.calStatus!=='busy') setCalStatus(Object.keys(S.calq||{}).length?'busy':'ok'); }
+  catch(e){ calCache[ws]=Object.assign(calCache[ws]||{events:[]},{loading:false,at:0}); setCalStatus('err',calErrText(e)); }
+  updateCal();
+}
+function reconcileCal(events, ws, we){
+  const byTask=new Map(); events.forEach(e=>{ if(e.task_id) byTask.set(e.task_id,e); });
+  const moved=[], removed=[];
+  S.tasks.forEach(t=>{ if(S.calq&&S.calq[t.id]) return; const e=byTask.get(t.id);
+    if(e){ const d=new Date(e.start), de=new Date(e.end); if(isNaN(d)) return; const ps=tzParts(d), k=ps.k, tmv=ps.hm, dur=Math.max(5,Math.round((de-d)/60000)||60);
+      if(!e.all_day && (t.due!==k || t.tm!==tmv || (t.dur||60)!==dur)){ if(t.tm||t.calOn){ t.due=k; t.tm=tmv; t.dur=dur; moved.push(t); } } t.calOn=1; }
+    else if(t.calOn && t.tm && t.due>=ws && t.due<=we){ t.tm=''; t.dur=undefined; t.calOn=0; removed.push(t); } });
+  if(moved.length||removed.length){ save(); const areas=new Set(moved.concat(removed).map(t=>t.a)); areas.forEach(id=>updateArea(id)); updateToday(); updateHome();
+    if(moved.length) toast(`Из Календаря обновлено время: ${moved.length} ${plural(moved.length,['задача','задачи','задач'])}`);
+    if(removed.length) toast(`Событие удалено в Календаре — время снято у ${removed.length} ${plural(removed.length,['задачи','задач','задач'])}`); }
+}
+const WD=['пн','вт','ср','чт','пт','сб','вс'], HPX=52;
+function dayItems(day){
+  const items=[]; const local=new Set();
+  S.tasks.forEach(t=>{ if(t.due!==day) return; local.add(t.id); if(t.tm){ const a=S.areas.find(x=>x.id===t.a)||{color:'#999',emoji:'❔',name:''}; const s=hm2m(t.tm); items.push({kind:'task',id:t.id,s,e:Math.min(1440,s+(t.dur||60)),title:t.t,emoji:a.emoji,color:a.color,done:!!t.done,pending:!!(S.calq&&S.calq[t.id])}); } });
+  const c=calCache[weekStartKey(day)]; const allday=[];
+  if(c) c.events.forEach(e=>{ if(e.task_id && S.tasks.some(t=>t.id===e.task_id)) return; const d=new Date(e.start), de=new Date(e.end); if(isNaN(d)) return;
+    if(e.all_day){ const k0=e.start.slice(0,10), k1=(e.end||e.start).slice(0,10); if(day>=k0 && (day<k1 || (day===k0&&k1<=k0))) allday.push(e); return; }
+    const ps=tzParts(d), pe=tzParts(de), k=ps.k, ke=pe.k; if(k>day || ke<day) return; const s=k<day?0:hm2m(ps.hm); const en=ke>day?1440:hm2m(pe.hm);
+    items.push({kind:'ext',s,e:Math.max(en,s+15),title:e.title,color:e.color||'#9AA3AE',cal:e.calendar||'',uid:e.uid,done:!!e.done}); });
+  return {items,allday};
+}
+function layoutBlocks(items){ items.sort((a,b)=>a.s-b.s||b.e-a.e); const out=[]; let cl=[], end=-1;
+  const flush=()=>{ const cols=[]; cl.forEach(it=>{ let c=0; while(cols[c]!=null && cols[c]>it.s) c++; cols[c]=it.e; it.col=c; }); cl.forEach(it=>it.ncol=cols.length); out.push(...cl); cl=[]; };
+  items.forEach(it=>{ if(cl.length && it.s>=end){ flush(); end=-1; } cl.push(it); end=Math.max(end,it.e); }); if(cl.length) flush(); return out; }
+function calWeekHTML(day){ const ws=weekStartKey(day), tk=todayKey();
+  return Array.from({length:7},(_,i)=>{ const k=addDaysKey(ws,i); const d=fromKey(k);
+    const cols=[...new Set(S.tasks.filter(t=>t.due===k&&!t.done).map(t=>(S.areas.find(a=>a.id===t.a)||{}).color).filter(Boolean))].slice(0,3);
+    const c=calCache[ws]; const ext=c&&c.events.some(e=>!e.task_id && (e.all_day?String(e.start).slice(0,10):tzParts(new Date(e.start)).k)===k);
+    return `<button class="wd${k===tk?' today':''}" data-day="${k}" aria-pressed="${k===day}"><span>${WD[i]}</span><b>${d.getDate()}</b><i class="wdots">${cols.map(cl=>`<i style="background:${cl}"></i>`).join('')}${ext?'<i style="background:var(--muted)"></i>':''}</i></button>`; }).join('')+'<div class="wsel"></div>'; }
+function calDayHTML(day){
+  const {items,allday}=dayItems(day); const blocks=layoutBlocks(items);
+  let H0=6, H1=24; blocks.forEach(b=>{ H0=Math.min(H0,Math.floor(b.s/60)); }); const tk=todayKey();
+  const untimed=S.tasks.filter(t=>t.due===day && !t.tm).sort((a,b)=>(a.done?1:0)-(b.done?1:0));
+  const d=fromKey(day); const title=d.toLocaleDateString('ru-RU',{weekday:'long',day:'numeric',month:'long'});
+  let h=`<div class="h2" style="margin-top:14px"><span>${title.charAt(0).toUpperCase()+title.slice(1)}</span><small>${items.filter(i=>i.kind==='task').length+untimed.length} ${plural(items.filter(i=>i.kind==='task').length+untimed.length,['задача','задачи','задач'])}</small></div>`;
+  if(untimed.length||allday.length){ h+=`<div class="untimed">${allday.map(e=>`<button class="uchip ext" style="--c:${e.color||'#9AA3AE'}" data-ext="${esc(e.title)}|${esc(e.calendar||'')}|весь день">🗓 ${esc(e.title)}</button>`).join('')}${untimed.map(t=>{ const a=S.areas.find(x=>x.id===t.a)||{color:'#999',emoji:'❔'}; return `<button class="uchip${t.done?' done':''}" style="--c:${a.color}" data-open="${t.id}">${esc(a.emoji)} ${esc(t.t)}</button>`; }).join('')}</div><div class="hint" style="text-align:left;margin:2px 2px 0">Без времени. Тап — открыть и назначить время.</div>`; }
+  h+=`<div class="tl" data-day="${day}" data-h0="${H0}"><div class="tl-grid" style="height:${(H1-H0)*HPX}px">`;
+  for(let hr=H0; hr<=H1; hr++) h+=`<div class="hr" style="top:${(hr-H0)*HPX}px"><span>${String(hr%24).padStart(2,'0')}:00</span></div>`;
+  blocks.forEach((b,i)=>{ const top=(b.s-H0*60)/60*HPX, ht=Math.max(24,(b.e-b.s)/60*HPX-2); const w=100/b.ncol;
+    const attr=b.kind==='task'?`data-open="${b.id}"`:`data-ext="${esc(b.title)}|${esc(b.cal)}|${m2hm(b.s)}–${m2hm(b.e)}"`;
+    h+=`<div class="cblk${b.kind==='ext'?' ext':''}${b.done?' done':''}${b.pending?' pending':''}" ${attr} style="--c:${b.color};--i:${i};top:${top}px;height:${ht}px;left:calc(${b.col*w}% + 2px);width:calc(${w}% - 6px)"><b>${b.kind==='task'?esc(b.emoji)+' ':''}${b.done?'✓ ':''}${esc(b.title)}</b>${ht>34?`<span>${m2hm(b.s)}–${m2hm(b.e)}${b.kind==='ext'&&b.cal?' · '+esc(b.cal):''}</span>`:''}</div>`; });
+  { const np=tzParts(new Date()); if(np.k===day){ const m=hm2m(np.hm); if(m>=H0*60) h+=`<div class="nowline" style="top:${(m-H0*60)/60*HPX}px"></div>`; } }
+  h+=`</div></div><div class="hint" style="margin-top:10px">Тап по пустому месту — новая задача на это время. Если перенести событие «Темп» в Календаре на iPhone или Mac, время задачи обновится здесь.</div>`;
+  return h;
+}
+function calPageHTML(){
+  if(!ui.calDay) ui.calDay=todayKey(); const day=ui.calDay; const mon=monLabel(day);
+  return `<section class="page" data-page="cal">
+    <div class="cal-head"><div class="mon">${mon}</div><button class="sync" id="calSync" data-s="${ui.calStatus}" aria-label="Синхронизировать"><i></i><span>${calStatusText()}</span></button></div>
+    <div class="cal-nav"><button class="cal-btn" data-wk="-1" aria-label="Предыдущая неделя">‹</button><button class="cal-today" data-wk="0">Сегодня</button><button class="cal-btn" data-wk="1" aria-label="Следующая неделя">›</button><button class="cal-others" data-others aria-pressed="${S.calOthers!==false}">${S.calOthers!==false?'Все календари':'Только «Темп»'}</button></div>
+    <div class="week" id="calWeek">${calWeekHTML(day)}</div>
+    ${apiReady()?'':`<div class="cal-banner">Синхронизация с iCloud работает, когда приложение открыто в Telegram. Здесь — локальный предпросмотр.</div>`}
+    <div class="cal-banner err" id="calErr" style="${ui.calStatus==='err'&&ui.calMsg?'':'display:none'}">⚠️ <span>${esc(ui.calMsg||'')}</span> <button class="cal-retry" data-calretry>Повторить</button></div>
+    <div id="calDay">${calDayHTML(day)}</div>
+  </section>`;
+}
+function placeWeekSel(){ const w=document.querySelector('#calWeek'); if(!w) return; const b=w.querySelector('.wd[aria-pressed="true"]'), sel=w.querySelector('.wsel'); if(b&&sel){ sel.style.left=b.offsetLeft+'px'; sel.style.width=b.offsetWidth+'px'; sel.style.opacity=1; } }
+function updateCal(){ const p=pageEl(P_CAL); if(!p) return; const sc=p.scrollTop; const tmp=document.createElement('div'); tmp.innerHTML=calPageHTML(); p.innerHTML=tmp.firstElementChild.innerHTML; p.scrollTop=sc; requestAnimationFrame(placeWeekSel); }
+function selectDay(k){ const prevWs=weekStartKey(ui.calDay); ui.calDay=k; const p=pageEl(P_CAL); if(!p) return;
+  if(weekStartKey(k)!==prevWs){ updateCal(); loadWeek(weekStartKey(k)); }
+  else { p.querySelectorAll('.wd').forEach(b=>b.setAttribute('aria-pressed',b.dataset.day===k)); placeWeekSel(); const dd=p.querySelector('#calDay'); dd.innerHTML=calDayHTML(k); p.querySelector('.mon').textContent=monLabel(k); }
+  setTimeout(scrollCalToFocus,60); haptic('select'); }
+function scrollCalToFocus(){ const p=pageEl(P_CAL); if(!p) return; const tl=p.querySelector('.tl'); if(!tl) return; const H0=+tl.dataset.h0; const day=tl.dataset.day; let m;
+  const np=tzParts(new Date()); if(day===np.k){ m=hm2m(np.hm)-60; } else { const it=dayItems(day).items; m=it.length?Math.min(...it.map(i=>i.s))-30:8*60; }
+  const y=tl.offsetTop+Math.max(0,(m-H0*60)/60*HPX)-10; p.scrollTo({top:Math.max(0,y),behavior:RM?'auto':'smooth'}); }
+setInterval(()=>{ if(S && ui.page===P_CAL){ const p=pageEl(P_CAL); const dd=p&&p.querySelector('#calDay'); if(dd && ui.calDay===todayKey()){ const sc=p.scrollTop; dd.innerHTML=calDayHTML(ui.calDay); p.scrollTop=sc; } } },60000);
+setInterval(()=>{ if(S && ui.page===P_CAL && !document.hidden) loadWeek(weekStartKey(ui.calDay)); },60000);
+document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible' && S){ scheduleCal(200); if(ui.page===P_CAL) loadWeek(weekStartKey(ui.calDay),true); } });
+async function calHello(){ if(!apiReady()){ setCalStatus('local'); return; } try{ const me=await api('GET','/api/me'); if(me.tz && me.tz!==ui.tz){ ui.tz=me.tz; updateCal(); } if(me.icloud!=='ok') setCalStatus('err','iCloud: '+(me.detail||'нет связи')); else setCalStatus(Object.keys(S.calq||{}).length?'busy':'ok'); }catch(e){ setCalStatus('err',calErrText(e)); } scheduleCal(300); }
 /* ---------- feedback ---------- */
 let toastT;
 function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),2600); }
@@ -1569,7 +1754,8 @@ function floatAt(anchor,lines){
 /* ---------- actions ---------- */
 function complete(t, btn){
   const a = S.areas.find(x=>x.id===t.a); if(!a) return;
-  if(t.rep){ const orig=t; const copy=Object.assign({},t,{id:uid(),rep:'',repOf:t.id,prevDue:t.due,rolled:0}); S.tasks.push(copy); orig.due=nextDue(orig.due,orig.rep); orig.rolled=0; t=copy; toast(`Повторится: ${dueInfo(orig.due).label.toLowerCase()}`); }
+  let origRep=null;
+  if(t.rep){ const orig=t; origRep=orig; const copy=Object.assign({},t,{id:uid(),rep:'',repOf:t.id,prevDue:t.due,rolled:0,calOn:0}); S.tasks.push(copy); orig.due=nextDue(orig.due,orig.rep); orig.rolled=0; t=copy; toast(`Повторится: ${dueInfo(orig.due).label.toLowerCase()}`); }
   const D=DIFF[t.d], at=attrs(a);
   const beforeL=areaLv(a).L, beforeR=rarityOf(beforeL), beforeO=overallLv().L;
   t.done=Date.now(); t.xp=Math.round(D.xp*(1+at.comf*.02)); a.xp+=t.xp;
@@ -1588,6 +1774,7 @@ function complete(t, btn){
   if(rowEl) rowEl.classList.add('done','pop');
   stageFx(a.id, !!t.repOf);
   haptic('impact','medium');
+  if(t.tm) calSync(t); if(origRep && origRep.tm) calSync(origRep);
   save();
   setTimeout(()=>{
     const af=areaLv(a), afR=rarityOf(af.L), afO=overallLv();
@@ -1608,7 +1795,8 @@ function undo(t, btn){
   if(t.en && k===todayKey()) S.energy.used=Math.max(0,S.energy.used-t.en);
   S.stats.doneTotal=Math.max(0,S.stats.doneTotal-1); if(t.d===3) S.stats.hardDone=Math.max(0,S.stats.hardDone-1);
   t.done=0; t.xp=0; t.coins=0; t.en=0;
-  if(t.repOf){ const orig=S.tasks.find(x=>x.id===t.repOf); if(orig&&t.prevDue) orig.due=t.prevDue; S.tasks=S.tasks.filter(x=>x.id!==t.id); const m=S.rdays[a.id]; if(m&&m[k]>0){ m[k]--; if(!m[k]) delete m[k]; } }
+  if(t.repOf){ const orig=S.tasks.find(x=>x.id===t.repOf); if(orig&&t.prevDue){ orig.due=t.prevDue; if(orig.tm) calSync(orig); } S.tasks=S.tasks.filter(x=>x.id!==t.id); if(t.calOn||(S.calq&&S.calq[t.id])) calQueue(t.id,'del'); const m=S.rdays[a.id]; if(m&&m[k]>0){ m[k]--; if(!m[k]) delete m[k]; } }
+  else if(t.tm) calSync(t);
   if(hadCoins){ S.cdays[k]=Math.max(0,(S.cdays[k]||0)-hadCoins); }
   recomputeDay(k);
   if(btn) floatAt(btn,[['отменено','var(--muted)']]); haptic('impact','light');
@@ -1628,13 +1816,13 @@ function openBox(id){
 let openSheet=null;
 function showSheet(id){ resetArmed(document); openSheet=$(id); $('#scrim').classList.add('open'); openSheet.classList.add('open'); openSheet.scrollTop=0; if(inTG&&ver('6.1')){ try{ tg.BackButton.show(); }catch(e){} } }
 function hideSheet(){ if(!openSheet) return; const s=openSheet; resetArmed(s); if(s.id==='areasSheet' && ui.areasDirty){ ui.areasDirty=false; setTimeout(()=>{ checkAch(); save(); buildPages(); },360); } if(s.id==='collSheet') setTimeout(()=>disposeViews(s),400); s.classList.remove('open'); $('#scrim').classList.remove('open'); openSheet=null; if(inTG&&ver('6.1')){ try{ tg.BackButton.hide(); }catch(e){} } }
-function currentAreaId(){ const n=S.areas.length; return (ui.page>=2&&ui.page<=n+1) ? S.areas[ui.page-2].id : null; }
-function openTask(editId, areaId){
+function currentAreaId(){ const n=S.areas.length; return (ui.page>=3&&ui.page<=n+2) ? S.areas[ui.page-3].id : null; }
+function openTask(editId, areaId, preset){
   if(!S.areas.length){ openAreas(); return; }
   const t=editId?S.tasks.find(x=>x.id===editId):null;
   ui.editId=t?t.id:null;
-  if(t){ ui.newArea=t.a; ui.newDiff=t.d; ui.newDue=t.due||todayKey(); ui.newDl=t.dl||''; ui.newRep=t.rep||''; }
-  else { ui.newArea=areaId||currentAreaId()||S.areas[0].id; ui.newDiff=2; ui.newDue=todayKey(); ui.newDl=''; ui.newRep=''; }
+  if(t){ ui.newArea=t.a; ui.newDiff=t.d; ui.newDue=t.due||todayKey(); ui.newDl=t.dl||''; ui.newRep=t.rep||''; ui.newTm=t.tm||''; ui.newDur=t.dur||60; }
+  else { ui.newArea=areaId||currentAreaId()||S.areas[0].id; ui.newDiff=2; ui.newDue=(preset&&preset.due)||todayKey(); ui.newDl=''; ui.newRep=''; ui.newTm=(preset&&preset.tm)||''; ui.newDur=60; }
   $('#taskView').style.display=t?'':'none'; $('#taskForm').style.display=t?'none':'';
   if(t) renderTaskView(t);
   $('#addTitle').textContent=t?'Изменить задачу':'Новая задача'; $('#addBtn').textContent=t?'Сохранить':'Добавить задачу'; $('#delTaskBtn').style.display=t?'':'none';
@@ -1648,6 +1836,8 @@ function renderTaskView(t){
   $('#tvMeta').innerHTML = row('Область',`${esc(a.emoji)} ${esc(a.name)}`) + row('Сложность',`${DIFF[t.d].name} · ⚡${DIFF[t.d].en} · +${DIFF[t.d].xp} XP`)
     + row('Когда делаю',`${di.label}${di.diff!==0&&di.diff<3&&di.diff>=0?` (${fmtDay(t.due)})`:''}`, di.cls==='late'?'late':'')
     + row('Дедлайн', dl?`${dl.diff<0?'Просрочен, ':''}${fmtDay(t.dl)}${dl.diff===0?' (сегодня)':dl.diff===1?' (завтра)':dl.diff>1?` (через ${dl.diff} ${plural(dl.diff,['день','дня','дней'])})`:''}`:'не задан', dl&&dl.diff<0?'late':'')
+    + row('Время', t.tm?`${t.tm}–${addMin(t.tm,t.dur||60)} (${fmtDur(t.dur||60)})`:'не задано')
+    + (t.tm?row('Календарь iCloud', S.calq&&S.calq[t.id]?'ждёт синхронизации':t.calOn?'✓ синхронизировано':apiReady()?'не синхронизировано':'вне Telegram'):'')
     + row('Повтор',REP[t.rep||'']) + (t.done?row('Статус','Выполнена'):'');
   $('#tvDone').style.display=t.done?'none':''; $('#tvDone').textContent='Готово, выполнено';
 }
@@ -1661,14 +1851,21 @@ function renderFormOpts(){
   const dlq=[['','Без дедлайна'],[addDaysKey(tk,7),'Через неделю'],[addDaysKey(tk,30),'Через месяц']]; const dlc=!!ui.newDl && !dlq.some(q=>q[0]===ui.newDl);
   $('#dlOpts').innerHTML=dlq.map(([k,l])=>`<button class="opt" data-dl="${k}" aria-pressed="${ui.newDl===k}">${l}</button>`).join('')+`<label class="opt datechip" aria-pressed="${dlc}">📅 ${dlc?fmtDay(ui.newDl):'Другая дата'}<input type="date" class="dateover" data-date="dl" value="${ui.newDl||ui.newDue||tk}" min="${tk}" aria-label="Выбрать дату дедлайна"></label>`;
   $('#repOpts').innerHTML=Object.keys(REP).map(k=>`<button class="opt" data-rep="${k}" aria-pressed="${ui.newRep===k}">${REP[k]}</button>`).join('');
+  const qt=['09:00','13:00','19:00'], hasT=!!ui.newTm, custT=hasT&&!qt.includes(ui.newTm);
+  $('#tmOpts').innerHTML=`<button class="opt" data-tm="" aria-pressed="${!hasT}">Без времени</button>`+qt.map(x=>`<button class="opt" data-tm="${x}" aria-pressed="${ui.newTm===x}">${x}</button>`).join('')+`<label class="opt datechip" aria-pressed="${custT}">🕒 ${custT?ui.newTm:'Своё'}<input type="time" class="dateover" data-time="1" value="${ui.newTm||'10:00'}" step="300" aria-label="Выбрать время"></label>`;
+  const durs=[[15,'15 мин'],[30,'30 мин'],[60,'1 ч'],[90,'1,5 ч'],[120,'2 ч'],[180,'3 ч']];
+  $('#durOpts').style.display=hasT?'':'none';
+  $('#durOpts').innerHTML=hasT?durs.map(([m,l])=>`<button class="opt" data-dur="${m}" aria-pressed="${ui.newDur===m}">${l}</button>`).join(''):'';
 }
 function saveTask(){
   const t=$('#taskInput').value.trim(); if(!t) return; const desc=$('#descInput').value.trim();
   let areaId=ui.newArea;
-  if(ui.editId){ const x=S.tasks.find(z=>z.id===ui.editId); if(x){ const prevA=x.a; x.t=t; x.desc=desc; x.a=ui.newArea; x.d=ui.newDiff; x.due=ui.newDue||todayKey(); x.dl=ui.newDl||''; x.rep=ui.newRep||''; if(prevA!==x.a) updateArea(prevA); } }
-  else S.tasks.push({id:uid(),t,desc,a:ui.newArea,d:ui.newDiff,c:Date.now(),done:0,due:ui.newDue||todayKey(),dl:ui.newDl||'',rep:ui.newRep||''});
+  let saved=null;
+  if(ui.editId){ const x=S.tasks.find(z=>z.id===ui.editId); if(x){ const prevA=x.a; x.t=t; x.desc=desc; x.a=ui.newArea; x.d=ui.newDiff; x.due=ui.newDue||todayKey(); x.dl=ui.newDl||''; x.rep=ui.newRep||''; x.tm=ui.newTm||''; x.dur=ui.newTm?ui.newDur:undefined; if(prevA!==x.a) updateArea(prevA); saved=x; } }
+  else { saved={id:uid(),t,desc,a:ui.newArea,d:ui.newDiff,c:Date.now(),done:0,due:ui.newDue||todayKey(),dl:ui.newDl||'',rep:ui.newRep||'',tm:ui.newTm||'',dur:ui.newTm?ui.newDur:undefined}; S.tasks.push(saved); }
+  if(saved) calSync(saved);
   ui.editId=null; save(); hideSheet(); haptic('impact','light'); updateArea(areaId); updateHome();
-  updateToday(); const idx=areaIndex(areaId); if(idx>=0 && ui.page!==0 && ui.page!==areaPage(idx)) goPage(areaPage(idx));
+  updateToday(); updateCal(); const idx=areaIndex(areaId); if(idx>=0 && ui.page!==0 && ui.page!==P_CAL && ui.page!==areaPage(idx)) goPage(areaPage(idx));
 }
 function openAreas(){ renderAreasList(); showSheet('#areasSheet'); }
 function renderAreasList(){
@@ -1770,10 +1967,11 @@ function renderThumb(k){
 /* ---------- events ---------- */
 function bind(){
   $('#navToday').addEventListener('click',()=>goPage(0));
-  $('#navHome').addEventListener('click',()=>goPage(1));
+  $('#navCal').addEventListener('click',()=>goPage(P_CAL));
+  $('#navHome').addEventListener('click',()=>goPage(P_HOME));
+  $('#ava').addEventListener('click',()=>goPage(pageCount()-1));
   $('#dots').addEventListener('click',e=>{ const i=[...$('#dots').children].indexOf(e.target); if(i>=0) goPage(i); });
   $('#navAch').addEventListener('click',()=>goPage(pageCount()-1));
-  $('#navShop').addEventListener('click',()=>goPage(shopIndex()));
   $('#coinPill').closest('.pill').addEventListener('click',()=>goPage(shopIndex()));
   $('#plus').addEventListener('click',()=>openTask(null,currentAreaId()));
   $('#openAreas').addEventListener('click',openAreas);
@@ -1787,6 +1985,12 @@ function bind(){
     const tb=e.target.closest('.t-body'); if(tb){ openTask(tb.closest('.task').dataset.id); return; }
     const add=e.target.closest('[data-add]'); if(add){ openTask(null,add.dataset.add||null); return; }
     const dlr=e.target.closest('[data-open]'); if(dlr){ openTask(dlr.dataset.open); return; }
+    const wd=e.target.closest('.wd[data-day]'); if(wd){ selectDay(wd.dataset.day); return; }
+    const wk=e.target.closest('[data-wk]'); if(wk){ const n=+wk.dataset.wk; selectDay(n===0?todayKey():addDaysKey(ui.calDay,7*n)); return; }
+    const oth=e.target.closest('[data-others]'); if(oth){ S.calOthers=(S.calOthers===false); save(); Object.keys(calCache).forEach(k=>delete calCache[k]); updateCal(); loadWeek(weekStartKey(ui.calDay),true); haptic('select'); return; }
+    const ext=e.target.closest('[data-ext]'); if(ext){ const [tt,cl,tm]=ext.dataset.ext.split('|'); toast(`${tt}${cl?' · '+cl:''} · ${tm}`); return; }
+    if(e.target.closest('#calSync')||e.target.closest('[data-calretry]')){ if(!apiReady()){ toast('Синхронизация работает внутри Telegram'); return; } toast('Синхронизирую с iCloud…'); scheduleCal(0); loadWeek(weekStartKey(ui.calDay),true); return; }
+    const grid=e.target.closest('.tl-grid'); if(grid && (e.target===grid || e.target.classList.contains('hr') || e.target.closest('.hr'))){ const tl=grid.closest('.tl'); const r=grid.getBoundingClientRect(); const y=e.clientY-r.top; const m=+tl.dataset.h0*60+Math.floor(y/HPX*60/30)*30; openTask(null,null,{due:tl.dataset.day,tm:m2hm(Math.min(23*60+30,Math.max(0,m)))}); return; }
     const tg2=e.target.closest('[data-toggle]'); if(tg2){ const id=tg2.dataset.toggle; ui.showDone[id]=!ui.showDone[id]; updateArea(id); return; }
     const ov=e.target.closest('[data-go]'); if(ov){ goPage(+ov.dataset.go); haptic('select'); return; }
     const box=e.target.closest('[data-box]'); if(box){ openBox(box.dataset.box); return; }
@@ -1809,8 +2013,11 @@ function bind(){
   $('#dlOpts').addEventListener('click',e=>{ const c=e.target.closest('button[data-dl]'); if(!c) return; ui.newDl=c.dataset.dl; renderFormOpts(); haptic('select'); });
   const onDatePick=e=>{ const inp=e.target.closest('.dateover'); if(!inp) return; const v=inp.value; if(!/^\d{4}-\d{2}-\d{2}$/.test(v)) return; if(inp.dataset.date==='due') ui.newDue=v; else ui.newDl=v; renderFormOpts(); haptic('select'); };
   ['#dueOpts','#dlOpts'].forEach(id=>{ $(id).addEventListener('change',onDatePick); $(id).addEventListener('click',e=>{ const inp=e.target.closest('.dateover'); if(inp && inp.showPicker){ try{ inp.showPicker(); }catch(err){} } }); });
+  $('#tmOpts').addEventListener('click',e=>{ const c=e.target.closest('button[data-tm]'); if(c){ ui.newTm=c.dataset.tm; renderFormOpts(); haptic('select'); return; } const inp=e.target.closest('.dateover'); if(inp&&inp.showPicker){ try{ inp.showPicker(); }catch(err){} } });
+  $('#tmOpts').addEventListener('change',e=>{ const inp=e.target.closest('.dateover'); if(inp && /^\d{2}:\d{2}$/.test(inp.value)){ ui.newTm=inp.value; renderFormOpts(); haptic('select'); } });
+  $('#durOpts').addEventListener('click',e=>{ const c=e.target.closest('[data-dur]'); if(!c) return; ui.newDur=+c.dataset.dur; renderFormOpts(); haptic('select'); });
   $('#repOpts').addEventListener('click',e=>{ const c=e.target.closest('[data-rep]'); if(!c) return; ui.newRep=c.dataset.rep; renderFormOpts(); haptic('select'); });
-  $('#delTaskBtn').addEventListener('click',e=>{ const id=ui.editId; if(!id) return; const t=S.tasks.find(x=>x.id===id); if(!t) return; armConfirm(e.currentTarget,'Точно удалить? Нажми ещё раз',()=>{ S.tasks=S.tasks.filter(x=>x.id!==id); ui.editId=null; save(); hideSheet(); updateArea(t.a); updateHome(); updateToday(); toast('Задача удалена'); haptic('notify','success'); }); });
+  $('#delTaskBtn').addEventListener('click',e=>{ const id=ui.editId; if(!id) return; const t=S.tasks.find(x=>x.id===id); if(!t) return; armConfirm(e.currentTarget,'Точно удалить? Нажми ещё раз',()=>{ S.tasks=S.tasks.filter(x=>x.id!==id); if(t.calOn||t.tm||(S.calq&&S.calq[id])) calQueue(id,'del'); ui.editId=null; save(); hideSheet(); updateArea(t.a); updateHome(); updateToday(); updateCal(); toast('Задача удалена'); haptic('notify','success'); }); });
 
   $('#areasList').addEventListener('input',e=>{ const inp=e.target.closest('[data-f]'); if(!inp) return; const a=S.areas.find(x=>x.id===inp.closest('.area-row').dataset.area); if(!a) return; const v=inp.value.trim(); if(inp.dataset.f==='name') a.name=v||'Без названия'; else a.emoji=v||'✨'; ui.areasDirty=true; save(); });
   $('#areasList').addEventListener('click',async e=>{
@@ -1818,11 +2025,12 @@ function bind(){
     const sw=e.target.closest('[data-color]'); if(sw){ const a=S.areas.find(x=>x.id===sw.closest('.swatches').dataset.area); a.color=sw.dataset.color; renderAreasList(); save(); applyPageTheme(); renderDots(); haptic('select'); return; }
     const d=e.target.closest('[data-del]');
     if(d && S.areas.length>1){ const a=S.areas.find(x=>x.id===d.dataset.del); if(!a) return; armConfirm(d,`Нажми ещё раз, чтобы удалить «${a.name}» вместе с задачами и опытом`,()=>{
+      S.tasks.filter(t=>t.a===a.id && (t.calOn||t.tm)).forEach(t=>calQueue(t.id,'del'));
       S.areas=S.areas.filter(x=>x.id!==a.id); S.tasks=S.tasks.filter(t=>t.a!==a.id); Object.values(S.days).forEach(dd=>{ if(dd.a) dd.a=dd.a.filter(x=>x!==a.id); }); delete S.rdays[a.id]; renderAreasList(); save(); ui.page=0; buildPages(); toast(`Область «${a.name}» удалена`); },{icon:true}); }
   });
   $('#addArea').addEventListener('click',()=>{ const used=new Set(S.areas.map(a=>a.color)); const color=COLORS.find(c=>!used.has(c))||COLORS[S.areas.length%COLORS.length]; const usedSets=new Set(S.areas.map(a=>a.set)); const set=Object.keys(SETS).find(k=>!usedSets.has(k))||'gem';
     S.areas.push({id:uid(),name:'Новая область',emoji:'✨',color,set,xp:0}); S.stats.areasCreated++; renderAreasList(); save(); buildPages(); const rows=document.querySelectorAll('#areasList input[data-f="name"]'); const last=rows[rows.length-1]; if(last){ last.focus(); last.select(); } });
-  $('#openColl').addEventListener('click',()=>{ hideSheet(); const a=S.areas[Math.max(0,ui.page-2)]||S.areas[0]; setTimeout(()=>openCollection(a?a.set:'run',a),380); });
+  $('#openColl').addEventListener('click',()=>{ hideSheet(); const a=S.areas[Math.max(0,ui.page-3)]||S.areas[0]; setTimeout(()=>openCollection(a?a.set:'run',a),380); });
   $('#areasDone').addEventListener('click',()=>{ ui.areasDirty=true; hideSheet(); });
   $('#rwSave').addEventListener('click',saveReward); $('#rwPrice').addEventListener('input',updateRwHint);
   $('#rwDel').addEventListener('click',e=>{ const r=S.rewards.find(x=>x.id===ui.rwId); if(!r) return; armConfirm(e.currentTarget,'Точно удалить? Нажми ещё раз',()=>{ S.rewards=S.rewards.filter(x=>x.id!==r.id); ui.rwId=null; save(); hideSheet(); updateShop(); toast(`Награда «${r.name}» удалена`); haptic('notify','success'); }); });
@@ -1836,7 +2044,7 @@ async function init(){
   if(tg){ try{ tg.ready(); tg.expand(); }catch(e){} try{ if(ver('7.7') && tg.disableVerticalSwipes) tg.disableVerticalSwipes(); }catch(e){} }
   applyTheme(); if(inTG && tg.onEvent) tg.onEvent('themeChanged',()=>{ applyTheme(); applyPageTheme(); });
   S = (await load()) || seed();
-  bind(); buildPages();
+  bind(); buildPages(); calHello();
   window.__tempo={get S(){ return S; }, thumbSrc, renderThumb, updateShop, renderTop};
 }
 init();
